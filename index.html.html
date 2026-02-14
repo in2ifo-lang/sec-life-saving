@@ -1,0 +1,2052 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>قواعد الحفاظ على الحياة - تعلّم واختبر</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg-primary: #0a1f1a;
+--bg-secondary: #0f2e25;
+--bg-card: #132f27;
+--bg-card-hover: #1a3d33;
+--accent-green: #2ecc71;
+--accent-green-dim: rgba(46,204,113,0.15);
+--accent-gold: #d4a03c;
+--accent-orange: #e67e22;
+--text-primary: #f0f5f3;
+--text-secondary: #8faa9e;
+--text-muted: #5a7a6e;
+--correct: #27ae60;
+--correct-bg: rgba(39,174,96,0.15);
+--wrong: #e74c3c;
+--wrong-bg: rgba(231,76,60,0.15);
+}
+
+- { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+font-family: ‘Tajawal’, sans-serif;
+background: var(–bg-primary);
+color: var(–text-primary);
+min-height: 100vh;
+overflow-x: hidden;
+}
+
+body::before {
+content: ‘’;
+position: fixed;
+top: -50%; right: -30%;
+width: 80vw; height: 80vw;
+background: radial-gradient(circle, rgba(46,204,113,0.06) 0%, transparent 70%);
+pointer-events: none; z-index: 0;
+}
+
+.container {
+max-width: 480px;
+margin: 0 auto;
+padding: 20px 16px 40px;
+position: relative;
+z-index: 1;
+}
+
+/* ===== SHARED HEADER ===== */
+.header {
+text-align: center;
+padding: 20px 0 10px;
+}
+
+.header-badge {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+background: var(–bg-card);
+border: 1px solid rgba(46,204,113,0.2);
+border-radius: 50px;
+padding: 8px 20px;
+font-size: 13px;
+color: var(–text-secondary);
+margin-bottom: 20px;
+}
+
+.header-badge .dot {
+width: 8px; height: 8px;
+background: var(–accent-green);
+border-radius: 50%;
+animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+0%,100% { opacity:1; box-shadow: 0 0 0 0 rgba(46,204,113,0.4); }
+50% { opacity:0.8; box-shadow: 0 0 0 6px rgba(46,204,113,0); }
+}
+
+.shield-icon {
+width: 64px; height: 64px;
+background: var(–accent-green);
+border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+margin: 0 auto 16px;
+box-shadow: 0 8px 32px rgba(46,204,113,0.3);
+animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+0%,100% { transform: translateY(0); }
+50% { transform: translateY(-6px); }
+}
+
+.shield-icon svg { width: 32px; height: 32px; fill: white; }
+
+.header h1 {
+font-size: 24px; font-weight: 800; margin-bottom: 6px;
+background: linear-gradient(135deg, var(–text-primary), var(–accent-green));
+-webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.header p { font-size: 14px; color: var(–text-secondary); }
+
+/* ===== HOME SCREEN ===== */
+.home-cards {
+display: flex; gap: 14px;
+margin-top: 30px;
+}
+
+.home-card {
+flex: 1;
+background: var(–bg-card);
+border: 1px solid rgba(46,204,113,0.15);
+border-radius: 18px;
+padding: 28px 16px;
+text-align: center;
+cursor: pointer;
+transition: all 0.3s;
+}
+
+.home-card:hover {
+border-color: rgba(46,204,113,0.4);
+transform: translateY(-4px);
+box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+}
+
+.home-card-icon {
+width: 52px; height: 52px;
+border-radius: 14px;
+display: flex; align-items: center; justify-content: center;
+margin: 0 auto 14px;
+font-size: 24px;
+}
+
+.home-card-icon.learn { background: rgba(46,204,113,0.15); }
+.home-card-icon.quiz { background: rgba(212,160,60,0.15); }
+
+.home-card h3 { font-size: 19px; font-weight: 800; margin-bottom: 0; }
+
+/* ===== SCREENS ===== */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ===== LEARN SECTION ===== */
+.learn-nav {
+display: flex; align-items: center; gap: 12px;
+margin-bottom: 24px;
+cursor: pointer;
+}
+
+.learn-nav svg { width: 22px; height: 22px; fill: var(–accent-green); }
+.learn-nav span { font-size: 15px; color: var(–accent-green); font-weight: 600; }
+
+.learn-progress-text {
+text-align: center;
+font-size: 13px;
+color: var(–text-secondary);
+margin-bottom: 16px;
+}
+
+.learn-progress-track {
+width: 100%; height: 5px;
+background: var(–bg-card);
+border-radius: 10px;
+overflow: hidden;
+margin-bottom: 28px;
+}
+
+.learn-progress-fill {
+height: 100%;
+background: linear-gradient(90deg, var(–accent-green), #58d68d);
+border-radius: 10px;
+transition: width 0.6s cubic-bezier(0.23,1,0.32,1);
+}
+
+/* Rule Learn Card */
+.rule-learn-card {
+animation: cardEnter 0.6s ease;
+}
+
+@keyframes cardEnter {
+from { opacity: 0; transform: translateY(20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.rule-learn-header {
+position: relative;
+border-radius: 20px;
+overflow: hidden;
+margin-bottom: 24px;
+background: linear-gradient(135deg, var(–bg-card), var(–bg-card-hover));
+border: 1px solid rgba(46,204,113,0.1);
+}
+
+.rule-learn-header-bg {
+padding: 32px 24px;
+text-align: center;
+position: relative;
+}
+
+.rule-learn-number {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 56px; height: 56px;
+background: linear-gradient(135deg, var(–accent-orange), var(–accent-gold));
+border-radius: 16px;
+font-size: 24px; font-weight: 900;
+color: white;
+margin-bottom: 14px;
+box-shadow: 0 6px 20px rgba(212,160,60,0.3);
+}
+
+.rule-learn-title {
+font-size: 26px; font-weight: 800;
+margin-bottom: 8px;
+color: var(–text-primary);
+}
+
+.rule-learn-subtitle {
+font-size: 14px;
+color: var(–text-secondary);
+line-height: 1.7;
+}
+
+/* Fun Fact Box */
+.learn-fun-fact {
+background: linear-gradient(135deg, rgba(212,160,60,0.08), rgba(46,204,113,0.05));
+border: 1px solid rgba(212,160,60,0.2);
+border-radius: 16px;
+padding: 18px;
+margin-bottom: 20px;
+display: flex; gap: 12px;
+animation: fadeUp 0.5s ease 0.2s both;
+}
+
+@keyframes fadeUp {
+from { opacity:0; transform: translateY(12px); }
+to { opacity:1; transform: translateY(0); }
+}
+
+.learn-fun-fact-icon {
+font-size: 28px; flex-shrink: 0;
+}
+
+.learn-fun-fact p {
+font-size: 13px; line-height: 1.8;
+color: var(–text-secondary);
+}
+
+.learn-fun-fact strong { color: var(–accent-gold); }
+
+/* Rule Details */
+.rule-details-title {
+font-size: 16px; font-weight: 700;
+color: var(–accent-green);
+margin-bottom: 14px;
+display: flex; align-items: center; gap: 8px;
+}
+
+.rule-details-title::before {
+content: ‘’;
+width: 4px; height: 20px;
+background: var(–accent-green);
+border-radius: 4px;
+}
+
+.rule-detail-item {
+display: flex; gap: 12px;
+align-items: flex-start;
+padding: 14px 16px;
+background: var(–bg-card);
+border: 1px solid rgba(46,204,113,0.08);
+border-radius: 14px;
+margin-bottom: 10px;
+animation: fadeUp 0.5s ease both;
+}
+
+.rule-detail-item:nth-child(2) { animation-delay: 0.1s; }
+.rule-detail-item:nth-child(3) { animation-delay: 0.2s; }
+.rule-detail-item:nth-child(4) { animation-delay: 0.3s; }
+.rule-detail-item:nth-child(5) { animation-delay: 0.4s; }
+.rule-detail-item:nth-child(6) { animation-delay: 0.5s; }
+
+.detail-icon {
+width: 32px; height: 32px;
+background: var(–accent-green-dim);
+border-radius: 10px;
+display: flex; align-items: center; justify-content: center;
+flex-shrink: 0;
+font-size: 16px;
+}
+
+.detail-text {
+font-size: 14px; line-height: 1.7;
+color: var(–text-primary);
+}
+
+/* Navigation Buttons */
+.learn-nav-buttons {
+display: flex; gap: 12px;
+margin-top: 28px;
+}
+
+.learn-btn {
+flex: 1;
+padding: 15px;
+border: none;
+border-radius: 14px;
+font-family: ‘Tajawal’, sans-serif;
+font-size: 15px; font-weight: 700;
+cursor: pointer;
+transition: all 0.3s;
+}
+
+.learn-btn.secondary {
+background: var(–bg-card);
+border: 1px solid rgba(46,204,113,0.2);
+color: var(–accent-green);
+}
+
+.learn-btn.secondary:hover {
+background: var(–bg-card-hover);
+border-color: rgba(46,204,113,0.4);
+}
+
+.learn-btn.primary {
+background: linear-gradient(135deg, var(–accent-green), #27ae60);
+color: white;
+box-shadow: 0 6px 20px rgba(46,204,113,0.3);
+}
+
+.learn-btn.primary:hover {
+transform: translateY(-2px);
+box-shadow: 0 10px 28px rgba(46,204,113,0.4);
+}
+
+.learn-btn.full { flex: none; width: 100%; }
+
+/* ===== WATERMARK ===== */
+.watermark{
+position:fixed;bottom:12px;left:50%;transform:translateX(-50%);
+z-index:40;display:flex;align-items:center;gap:6px;
+font-size:11px;color:rgba(46,204,113,.25);font-weight:600;
+letter-spacing:1.5px;pointer-events:none;
+user-select:none;-webkit-user-select:none;
+}
+.watermark span{font-size:13px}
+
+/* ===== REGISTRATION SCREEN ===== */
+.reg-card{background:var(–bg-card);border:1px solid rgba(46,204,113,.15);border-radius:20px;padding:32px 24px;margin-top:20px;animation:cardEnter .6s ease}
+.reg-icon{width:72px;height:72px;background:linear-gradient(135deg,var(–accent-green),#27ae60);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 8px 32px rgba(46,204,113,.3)}
+.reg-icon svg{width:36px;height:36px;fill:white}
+.reg-title{text-align:center;font-size:20px;font-weight:800;margin-bottom:6px}
+.reg-sub{text-align:center;font-size:13px;color:var(–text-secondary);margin-bottom:28px;line-height:1.6}
+.input-group{margin-bottom:18px}
+.input-label{display:block;font-size:13px;font-weight:700;color:var(–text-secondary);margin-bottom:8px}
+.input-field{width:100%;padding:14px 16px;background:var(–bg-secondary);border:2px solid rgba(46,204,113,.15);border-radius:14px;font-family:inherit;font-size:15px;color:var(–text-primary);outline:none;transition:border-color .3s}
+.input-field:focus{border-color:var(–accent-green)}
+.input-field::placeholder{color:var(–text-muted)}
+.reg-btn{width:100%;padding:16px;background:linear-gradient(135deg,var(–accent-green),#27ae60);border:none;border-radius:14px;font-family:inherit;font-size:16px;font-weight:700;color:white;cursor:pointer;margin-top:8px;box-shadow:0 8px 24px rgba(46,204,113,.3);transition:all .3s;opacity:.5;pointer-events:none}
+.reg-btn.enabled{opacity:1;pointer-events:all}
+.reg-btn.enabled:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(46,204,113,.4)}
+.reg-error{font-size:12px;color:var(–wrong);margin-top:6px;display:none}
+
+/* ===== DOWNLOAD BUTTON ===== */
+.download-btn{width:100%;padding:16px;background:linear-gradient(135deg,#3498db,#2980b9);border:none;border-radius:14px;font-family:inherit;font-size:16px;font-weight:700;color:white;cursor:pointer;margin-bottom:12px;box-shadow:0 8px 24px rgba(52,152,219,.3);transition:all .3s;display:flex;align-items:center;justify-content:center;gap:8px}
+.download-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(52,152,219,.4)}
+.download-btn svg{width:20px;height:20px;fill:white}
+
+/* ===== USER INFO ON SCORE ===== */
+.score-user-info{background:var(–bg-card);border:1px solid rgba(46,204,113,.15);border-radius:14px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.score-user-avatar{width:42px;height:42px;background:var(–accent-green-dim);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.score-user-name{font-size:15px;font-weight:700}
+.score-user-id{font-size:12px;color:var(–text-secondary)}
+
+/* ===== STOP HOME BANNER ===== */
+.stop-home-banner{
+margin-top:24px;position:relative;overflow:hidden;
+background:linear-gradient(135deg,rgba(192,57,43,.12),rgba(231,76,60,.06));
+border:1.5px solid rgba(231,76,60,.3);border-radius:20px;
+padding:22px 20px;cursor:pointer;
+transition:all .4s cubic-bezier(.23,1,.32,1);
+animation:fadeUp .6s ease .3s both;
+}
+.stop-home-banner:hover{
+border-color:rgba(231,76,60,.6);
+transform:translateY(-3px);
+box-shadow:0 12px 40px rgba(231,76,60,.15);
+}
+.stop-home-glow{
+position:absolute;top:-50%;right:-20%;width:200px;height:200px;
+background:radial-gradient(circle,rgba(231,76,60,.1) 0%,transparent 70%);
+pointer-events:none;
+}
+.stop-home-content{
+display:flex;align-items:center;gap:16px;position:relative;z-index:1;
+}
+.stop-home-icon{position:relative;flex-shrink:0;width:56px;height:56px;display:flex;align-items:center;justify-content:center}
+.stop-hand-circle{
+width:52px;height:52px;
+background:linear-gradient(135deg,#e74c3c,#c0392b);
+border-radius:50%;display:flex;align-items:center;justify-content:center;
+box-shadow:0 4px 20px rgba(231,76,60,.4);
+position:relative;z-index:2;
+}
+.stop-hand-svg{width:26px;height:26px;fill:white}
+.stop-pulse-ring{
+position:absolute;top:50%;left:50%;
+width:52px;height:52px;
+border:2px solid rgba(231,76,60,.4);border-radius:50%;
+transform:translate(-50%,-50%);
+animation:stop-pulse 2.5s ease-out infinite;
+}
+.stop-pulse-ring.delay{animation-delay:1.2s}
+@keyframes stop-pulse{
+0%{width:52px;height:52px;opacity:.6}
+100%{width:90px;height:90px;opacity:0}
+}
+.stop-home-text{flex:1;min-width:0}
+.stop-home-title{font-size:17px;font-weight:800;color:#e74c3c;margin-bottom:5px}
+.stop-home-sub{font-size:12px;color:var(–text-secondary);line-height:1.6}
+.stop-home-arrow{flex-shrink:0;width:28px;height:28px;background:rgba(231,76,60,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.stop-home-arrow svg{width:18px;height:18px;fill:#e74c3c}
+body.en .stop-home-arrow svg,body.bn .stop-home-arrow svg{transform:none}
+body:not(.en):not(.bn) .stop-home-arrow svg{transform:rotate(180deg)}
+.stop-home-banner:hover .stop-home-arrow{background:rgba(231,76,60,.25);transform:scale(1.1)}
+
+/* ===== SPECIAL STOP RULE ===== */
+.rule-learn-number.stop-badge{background:linear-gradient(135deg,#e74c3c,#c0392b);font-size:20px;width:56px;height:56px;box-shadow:0 6px 24px rgba(231,76,60,.4)}
+.rule-learn-header.stop-header{border-color:rgba(231,76,60,.25)}
+.rule-learn-header.stop-header .rule-learn-header-bg{background:linear-gradient(135deg,rgba(231,76,60,.08),rgba(192,57,43,.05))}
+.rule-learn-title.stop-title{color:#e74c3c}
+.stop-banner{
+background:linear-gradient(135deg,rgba(231,76,60,.12),rgba(192,57,43,.06));
+border:1px solid rgba(231,76,60,.25);border-radius:16px;
+padding:18px;text-align:center;margin-bottom:20px;
+animation:fadeUp .5s ease .15s both;
+}
+.stop-banner-text{font-size:14px;line-height:1.8;color:#f19c8e;font-weight:600}
+.stop-banner-text strong{color:#e74c3c}
+
+/* ===== TIMER ===== */
+.timer-bar-container {
+margin-bottom: 20px;
+animation: fadeUp 0.4s ease;
+}
+
+.timer-bar {
+width: 100%; height: 8px;
+background: var(–bg-card);
+border-radius: 10px;
+overflow: hidden;
+margin-bottom: 10px;
+}
+
+.timer-bar-fill {
+height: 100%;
+width: 100%;
+background: linear-gradient(90deg, var(–accent-green), #58d68d);
+border-radius: 10px;
+transition: width 1s linear, background 0.5s ease;
+}
+
+.timer-bar-fill.warning {
+background: linear-gradient(90deg, var(–accent-gold), #f0c040);
+}
+
+.timer-bar-fill.danger {
+background: linear-gradient(90deg, var(–wrong), #ff6b6b);
+animation: timer-pulse 0.5s ease infinite;
+}
+
+@keyframes timer-pulse {
+0%, 100% { opacity: 1; }
+50% { opacity: 0.7; }
+}
+
+.timer-display {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 6px;
+}
+
+.timer-icon { font-size: 18px; }
+
+.timer-text {
+font-size: 22px;
+font-weight: 900;
+color: var(–accent-green);
+min-width: 36px;
+text-align: center;
+transition: color 0.5s ease;
+}
+
+.timer-text.warning { color: var(–accent-gold); }
+.timer-text.danger { color: var(–wrong); animation: timer-pulse 0.5s ease infinite; }
+
+.timer-expired-feedback {
+background: rgba(231,76,60,0.1);
+border: 1px solid rgba(231,76,60,0.3);
+color: #f19c8e;
+}
+
+/* ===== QUIZ SECTION ===== */
+.progress-section { margin: 24px 0 20px; }
+
+.progress-info {
+display: flex; justify-content: space-between; align-items: center;
+margin-bottom: 10px;
+}
+
+.progress-label { font-size: 13px; color: var(–text-secondary); }
+.progress-count { font-size: 14px; font-weight: 700; color: var(–accent-green); }
+
+.progress-track {
+width: 100%; height: 6px;
+background: var(–bg-card);
+border-radius: 10px; overflow: hidden;
+}
+
+.progress-fill {
+height: 100%;
+background: linear-gradient(90deg, var(–accent-green), #58d68d);
+border-radius: 10px;
+transition: width 0.6s cubic-bezier(0.23,1,0.32,1);
+}
+
+.rule-badge {
+display: flex; align-items: center; gap: 12px;
+background: linear-gradient(135deg, var(–bg-card), var(–bg-card-hover));
+border: 1px solid rgba(46,204,113,0.15);
+border-radius: 16px;
+padding: 14px 18px;
+margin-bottom: 20px;
+animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+from { opacity:0; transform: translateX(20px); }
+to { opacity:1; transform: translateX(0); }
+}
+
+.rule-number {
+width: 44px; height: 44px;
+background: linear-gradient(135deg, var(–accent-orange), var(–accent-gold));
+border-radius: 12px;
+display: flex; align-items: center; justify-content: center;
+font-size: 18px; font-weight: 900; color: white;
+flex-shrink: 0;
+box-shadow: 0 4px 16px rgba(212,160,60,0.3);
+}
+
+.rule-info h3 { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+.rule-info p { font-size: 12px; color: var(–text-secondary); }
+
+.fun-fact {
+background: linear-gradient(135deg, rgba(212,160,60,0.08), rgba(46,204,113,0.05));
+border: 1px solid rgba(212,160,60,0.2);
+border-radius: 16px;
+padding: 16px;
+margin-bottom: 24px;
+display: flex; gap: 12px;
+animation: fadeUp 0.5s ease 0.2s both;
+}
+
+.fun-fact-icon { font-size: 24px; flex-shrink: 0; }
+.fun-fact p { font-size: 13px; line-height: 1.7; color: var(–text-secondary); }
+.fun-fact strong { color: var(–accent-gold); }
+
+.question-text {
+font-size: 18px; font-weight: 700;
+line-height: 1.7;
+margin-bottom: 20px;
+}
+
+.question-number-inline {
+display: inline-flex; align-items: center; justify-content: center;
+width: 28px; height: 28px;
+background: var(–accent-green);
+border-radius: 8px;
+font-size: 14px; font-weight: 800; color: white;
+margin-left: 8px; vertical-align: middle;
+}
+
+.options-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+
+.option-btn {
+display: flex; align-items: center; gap: 14px;
+width: 100%; padding: 16px 18px;
+background: var(–bg-card);
+border: 2px solid rgba(46,204,113,0.1);
+border-radius: 14px;
+cursor: pointer;
+transition: all 0.3s ease;
+text-align: right;
+font-family: ‘Tajawal’, sans-serif;
+position: relative; overflow: hidden;
+}
+
+.option-btn:hover:not(.disabled) {
+border-color: rgba(46,204,113,0.4);
+background: var(–bg-card-hover);
+transform: translateX(-4px);
+}
+
+.option-letter {
+width: 36px; height: 36px;
+background: var(–bg-secondary);
+border: 2px solid rgba(46,204,113,0.2);
+border-radius: 10px;
+display: flex; align-items: center; justify-content: center;
+font-size: 15px; font-weight: 700; color: var(–accent-green);
+flex-shrink: 0; transition: all 0.3s;
+}
+
+.option-text { font-size: 15px; font-weight: 500; line-height: 1.5; }
+
+.option-btn.correct {
+border-color: var(–correct); background: var(–correct-bg);
+animation: correctPop 0.5s ease;
+}
+@keyframes correctPop { 0%{transform:scale(1)} 30%{transform:scale(1.02)} 100%{transform:scale(1)} }
+.option-btn.correct .option-letter { background: var(–correct); border-color: var(–correct); color: white; }
+
+.option-btn.wrong {
+border-color: var(–wrong); background: var(–wrong-bg);
+animation: shake 0.5s ease;
+}
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(6px)} 40%{transform:translateX(-6px)} 60%{transform:translateX(4px)} 80%{transform:translateX(-4px)} }
+.option-btn.wrong .option-letter { background: var(–wrong); border-color: var(–wrong); color: white; }
+
+.option-btn.disabled { pointer-events: none; opacity: 0.5; }
+.option-btn.correct.disabled, .option-btn.wrong.disabled { opacity: 1; }
+
+.feedback {
+padding: 16px; border-radius: 14px;
+margin-bottom: 16px;
+font-size: 14px; line-height: 1.7;
+display: none;
+animation: fadeUp 0.4s ease;
+}
+.feedback.show { display: block; }
+.feedback.correct-feedback { background: var(–correct-bg); border: 1px solid rgba(39,174,96,0.3); color: #6fcf97; }
+.feedback.wrong-feedback { background: var(–wrong-bg); border: 1px solid rgba(231,76,60,0.3); color: #f19c8e; }
+
+.next-btn {
+width: 100%; padding: 16px;
+background: linear-gradient(135deg, var(–accent-green), #27ae60);
+border: none; border-radius: 14px;
+font-family: ‘Tajawal’, sans-serif;
+font-size: 16px; font-weight: 700; color: white;
+cursor: pointer; display: none;
+box-shadow: 0 8px 24px rgba(46,204,113,0.3);
+transition: all 0.3s;
+}
+.next-btn.show { display: block; }
+.next-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(46,204,113,0.4); }
+
+/* ===== SCORE ===== */
+.score-section { display: none; text-align: center; padding: 40px 0; animation: fadeUp 0.6s ease; }
+.score-section.show { display: block; }
+
+.score-circle {
+width: 160px; height: 160px;
+border-radius: 50%;
+margin: 0 auto 24px;
+position: relative;
+display: flex; align-items: center; justify-content: center; flex-direction: column;
+}
+
+.score-circle svg { position: absolute; width: 100%; height: 100%; transform: rotate(-90deg); }
+.score-circle circle { fill: none; stroke-width: 8; cx: 80; cy: 80; r: 72; }
+.score-circle .track { stroke: var(–bg-card); }
+.score-circle .fill-circle {
+stroke: var(–accent-green);
+stroke-dasharray: 452.4; stroke-dashoffset: 452.4;
+stroke-linecap: round;
+transition: stroke-dashoffset 1.5s cubic-bezier(0.23,1,0.32,1);
+}
+
+.score-value { font-size: 48px; font-weight: 900; color: var(–accent-green); z-index: 1; line-height: 1; }
+.score-label { font-size: 14px; color: var(–text-secondary); z-index: 1; }
+
+.score-section h2 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+.score-section .score-message { font-size: 15px; color: var(–text-secondary); margin-bottom: 30px; line-height: 1.7; }
+
+.score-stats { display: flex; gap: 12px; margin-bottom: 30px; }
+.stat-card {
+flex: 1; background: var(–bg-card);
+border: 1px solid rgba(46,204,113,0.1);
+border-radius: 14px; padding: 16px 12px;
+}
+.stat-card .stat-num { font-size: 28px; font-weight: 900; }
+.stat-card .stat-txt { font-size: 12px; color: var(–text-secondary); margin-top: 4px; }
+.stat-card.correct-stat .stat-num { color: var(–correct); }
+.stat-card.wrong-stat .stat-num { color: var(–wrong); }
+
+.restart-btn, .home-btn-bottom {
+width: 100%; padding: 16px;
+border: none; border-radius: 14px;
+font-family: ‘Tajawal’, sans-serif;
+font-size: 16px; font-weight: 700;
+cursor: pointer; transition: all 0.3s;
+margin-bottom: 12px;
+}
+
+.restart-btn {
+background: linear-gradient(135deg, var(–accent-green), #27ae60);
+color: white;
+box-shadow: 0 8px 24px rgba(46,204,113,0.3);
+}
+
+.home-btn-bottom {
+background: var(–bg-card);
+border: 1px solid rgba(46,204,113,0.2);
+color: var(–accent-green);
+}
+
+/* ===== CONFETTI ===== */
+.confetti-container {
+position: fixed; top: 0; left: 0;
+width: 100%; height: 100%;
+pointer-events: none; z-index: 100; overflow: hidden;
+}
+
+.confetti {
+position: absolute; width: 10px; height: 10px; top: -10px;
+animation: confetti-fall linear forwards;
+}
+
+@keyframes confetti-fall {
+to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ===== RULE DOTS NAV ===== */
+.dots-nav {
+display: flex; justify-content: center; gap: 8px;
+margin-bottom: 20px;
+}
+
+.dot-item {
+width: 10px; height: 10px;
+background: var(–bg-card);
+border: 1px solid rgba(46,204,113,0.2);
+border-radius: 50%;
+transition: all 0.3s;
+cursor: pointer;
+}
+
+.dot-item.active {
+background: var(–accent-green);
+border-color: var(–accent-green);
+box-shadow: 0 0 8px rgba(46,204,113,0.4);
+}
+
+.dot-item.visited {
+background: rgba(46,204,113,0.4);
+border-color: rgba(46,204,113,0.4);
+}
+/* ===== LANGUAGE SELECTOR ===== */
+.lang-selector-wrap{position:fixed;top:16px;left:16px;z-index:50}
+body.en .lang-selector-wrap,body.bn .lang-selector-wrap{left:auto;right:16px}
+
+.lang-globe-btn{
+display:flex;align-items:center;gap:8px;
+background:var(–bg-card);border:1px solid rgba(46,204,113,.25);
+border-radius:50px;padding:8px 16px 8px 12px;
+cursor:pointer;transition:all .3s;color:var(–text-primary);
+font-family:inherit;font-size:13px;font-weight:600;
+box-shadow:0 4px 16px rgba(0,0,0,.2);
+backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.lang-globe-btn:hover{border-color:rgba(46,204,113,.5);box-shadow:0 6px 24px rgba(0,0,0,.3);transform:translateY(-1px)}
+.lang-globe-btn .globe-icon{font-size:18px;animation:spin-slow 12s linear infinite}
+@keyframes spin-slow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.lang-globe-btn .current-lang{font-weight:700}
+.lang-globe-btn .chevron{transition:transform .3s;font-size:10px;color:var(–text-secondary)}
+.lang-globe-btn.open .chevron{transform:rotate(180deg)}
+
+.lang-dropdown{
+position:absolute;top:calc(100% + 8px);left:0;
+background:var(–bg-card);border:1px solid rgba(46,204,113,.2);
+border-radius:16px;overflow:hidden;min-width:180px;
+box-shadow:0 12px 40px rgba(0,0,0,.4);
+opacity:0;transform:translateY(-8px) scale(.96);
+pointer-events:none;transition:all .25s cubic-bezier(.23,1,.32,1);
+}
+body.en .lang-dropdown,body.bn .lang-dropdown{left:auto;right:0}
+.lang-dropdown.open{opacity:1;transform:translateY(0) scale(1);pointer-events:all}
+
+.lang-dropdown-header{padding:12px 16px 8px;font-size:11px;font-weight:700;color:var(–text-muted);text-transform:uppercase;letter-spacing:1px}
+
+.lang-option{
+display:flex;align-items:center;gap:12px;
+padding:12px 16px;cursor:pointer;transition:all .2s;
+border:none;background:transparent;width:100%;
+font-family:inherit;font-size:14px;color:var(–text-primary);
+text-align:right;
+}
+body.en .lang-option,body.bn .lang-option{text-align:left}
+.lang-option:hover{background:rgba(46,204,113,.08)}
+.lang-option.active{background:rgba(46,204,113,.12)}
+.lang-option.active .lang-check{opacity:1}
+
+.lang-flag{font-size:22px;flex-shrink:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);border-radius:10px}
+.lang-name{flex:1;font-weight:600}
+.lang-native{font-size:12px;color:var(–text-secondary);font-weight:400;display:block;margin-top:1px}
+.lang-check{color:var(–accent-green);font-size:16px;font-weight:900;opacity:0;transition:opacity .2s}
+
+body.en{font-family:‘Plus Jakarta Sans’,sans-serif;direction:ltr}
+body.en .lang-btn{font-family:‘Plus Jakarta Sans’,sans-serif}
+body.en .option-btn{text-align:left}
+body.en .question-number-inline{margin-left:0;margin-right:8px}
+body.en .option-btn:hover:not(.disabled){transform:translateX(4px)}
+body.en .back-nav svg,.learn-nav svg{transition:transform .3s}
+body.en .learn-nav svg{transform:rotate(180deg)}
+body.en .learn-btn,.body.en .next-btn,.body.en .restart-btn,.body.en .home-btn-bottom{font-family:‘Plus Jakarta Sans’,sans-serif}
+body.bn{font-family:‘Noto Sans Bengali’,‘Tajawal’,sans-serif;direction:ltr}
+body.bn .lang-btn{font-family:‘Noto Sans Bengali’,sans-serif}
+body.bn .option-btn{text-align:left}
+body.bn .question-number-inline{margin-left:0;margin-right:8px}
+body.bn .option-btn:hover:not(.disabled){transform:translateX(4px)}
+body.bn .learn-nav svg{transform:rotate(180deg)}
+body.ur{font-family:‘Noto Nastaliq Urdu’,‘Tajawal’,sans-serif;direction:rtl}
+body.ur .option-btn{text-align:right}
+body.ur .option-btn:hover:not(.disabled){transform:translateX(-4px)}
+body.hi{font-family:‘Noto Sans Devanagari’,‘Tajawal’,sans-serif;direction:ltr}
+body.hi .option-btn{text-align:left}
+body.hi .question-number-inline{margin-left:0;margin-right:8px}
+body.hi .option-btn:hover:not(.disabled){transform:translateX(4px)}
+body.hi .learn-nav svg{transform:rotate(180deg)}
+</style>
+
+</head>
+<body>
+
+<!-- LANGUAGE SELECTOR -->
+
+<div class="lang-selector-wrap" id="langWrap">
+<button class="lang-globe-btn" id="langGlobeBtn" onclick="toggleLangDropdown()">
+<span class="globe-icon">🌍</span>
+<span class="current-lang" id="currentLangLabel">عربي</span>
+<span class="chevron">▼</span>
+</button>
+<div class="lang-dropdown" id="langDropdown">
+<div class="lang-dropdown-header" id="langDropHeader">اختر اللغة</div>
+<button class="lang-option active" id="optAr" onclick="pickLang('ar')">
+<span class="lang-flag">🇸🇦</span>
+<span class="lang-name">العربية<span class="lang-native">Arabic</span></span>
+<span class="lang-check">✓</span>
+</button>
+<button class="lang-option" id="optEn" onclick="pickLang('en')">
+<span class="lang-flag">🇬🇧</span>
+<span class="lang-name">English<span class="lang-native">الإنجليزية</span></span>
+<span class="lang-check">✓</span>
+</button>
+<button class="lang-option" id="optBn" onclick="pickLang('bn')">
+<span class="lang-flag">🇧🇩</span>
+<span class="lang-name">বাংলা<span class="lang-native">Bengali</span></span>
+<span class="lang-check">✓</span>
+</button>
+<button class="lang-option" id="optUr" onclick="pickLang('ur')">
+<span class="lang-flag">🇵🇰</span>
+<span class="lang-name">اردو<span class="lang-native">Urdu</span></span>
+<span class="lang-check">✓</span>
+</button>
+<button class="lang-option" id="optHi" onclick="pickLang('hi')">
+<span class="lang-flag">🇮🇳</span>
+<span class="lang-name">हिंदी<span class="lang-native">Hindi</span></span>
+<span class="lang-check">✓</span>
+</button>
+</div>
+</div>
+
+<div class="container">
+
+<!-- ==================== REGISTRATION SCREEN ==================== -->
+
+<div class="screen active" id="regScreen">
+<div class="header">
+<div class="shield-icon">
+<svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5zm-1 15l-4-4 1.41-1.41L11 14.17l6.59-6.59L19 9l-8 8z"/></svg>
+</div>
+<h1 id="regMainTitle">قواعد الحفاظ على الحياة</h1>
+</div>
+<div class="reg-card">
+<div class="reg-icon">
+<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+</div>
+<div class="reg-title" id="regTitle">سجّل بياناتك</div>
+<div class="reg-sub" id="regSub">أدخل اسمك ورقمك الوظيفي للبدء</div>
+<div class="input-group">
+<label class="input-label" id="labelName">الاسم الكامل</label>
+<input class="input-field" type="text" id="inputName" placeholder="" oninput="checkRegForm()">
+</div>
+<div class="input-group">
+<label class="input-label" id="labelId">الرقم الوظيفي</label>
+<input class="input-field" type="text" id="inputId" placeholder="" oninput="checkRegForm()">
+</div>
+<button class="reg-btn" id="regBtn" onclick="submitReg()">
+<span id="regBtnText">ابدأ</span>
+</button>
+</div>
+</div>
+
+<!-- ==================== HOME SCREEN ==================== -->
+
+<div class="screen" id="homeScreen">
+<div class="header">
+<div class="shield-icon">
+<svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5zm-1 15l-4-4 1.41-1.41L11 14.17l6.59-6.59L19 9l-8 8z"/></svg>
+</div>
+<h1 id="homeTitle">قواعد الحفاظ على الحياة</h1>
+</div>
+
+```
+<div class="home-cards">
+<div class="home-card" onclick="goToLearn()">
+<div class="home-card-icon learn">📖</div>
+<h3 id="homeLearnTitle">تعلّم القواعد</h3>
+</div>
+<div class="home-card" onclick="goToQuiz()">
+<div class="home-card-icon quiz">⚡</div>
+<h3 id="homeQuizTitle">ابدأ الاختبار</h3>
+</div>
+</div>
+
+<!-- STOP UNSAFE WORK BANNER -->
+<div class="stop-home-banner" onclick="goToStopRule()">
+<div class="stop-home-glow"></div>
+<div class="stop-home-content">
+<div class="stop-home-icon">
+<div class="stop-hand-circle">
+<svg viewBox="0 0 24 24" class="stop-hand-svg"><path d="M10.5 1.5c.83 0 1.5.67 1.5 1.5v4h1V2.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5V7h1V3.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v10.5c0 3.59-2.91 6.5-6.5 6.5H12c-2.42 0-4.56-1.33-5.69-3.31L3.06 11.5c-.44-.77-.19-1.75.56-2.22.74-.47 1.73-.25 2.2.5L7.5 12.5V3c0-.83.67-1.5 1.5-1.5S10.5 2.17 10.5 3v4.5V1.5z"/></svg>
+</div>
+<div class="stop-pulse-ring"></div>
+<div class="stop-pulse-ring delay"></div>
+</div>
+<div class="stop-home-text">
+<div class="stop-home-title" id="stopHomeTitle">أوقف العمل غير الآمن</div>
+<div class="stop-home-sub" id="stopHomeSub">جميع الموظفين والمقاولين لديهم الصلاحية لإيقاف أي عمل غير آمن</div>
+</div>
+<div class="stop-home-arrow">
+<svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+</div>
+</div>
+</div>
+```
+
+</div>
+
+<!-- ==================== LEARN SCREEN ==================== -->
+
+<div class="screen" id="learnScreen">
+<div class="learn-nav" onclick="goHome()">
+<svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+<span>الرجوع للرئيسية</span>
+</div>
+
+```
+<div class="dots-nav" id="dotsNav"></div>
+
+<div class="learn-progress-text" id="learnProgressText"></div>
+<div class="learn-progress-track">
+<div class="learn-progress-fill" id="learnProgressFill" style="width: 50%"></div>
+</div>
+
+<div id="learnContent"></div>
+
+<div class="learn-nav-buttons" id="learnNavButtons"></div>
+```
+
+</div>
+
+<!-- ==================== QUIZ SCREEN ==================== -->
+
+<div class="screen" id="quizScreen">
+<div class="learn-nav" onclick="goHome()">
+<svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+<span>الرجوع للرئيسية</span>
+</div>
+
+```
+<div class="progress-section">
+<div class="progress-info">
+<span class="progress-label">التقدم</span>
+<span class="progress-count" id="progressCount"></span>
+</div>
+<div class="progress-track">
+<div class="progress-fill" id="progressFill"></div>
+</div>
+</div>
+
+<div id="quizContent">
+<div class="timer-bar-container">
+<div class="timer-bar">
+<div class="timer-bar-fill" id="timerBarFill"></div>
+</div>
+<div class="timer-display">
+<span class="timer-icon">⏱️</span>
+<span class="timer-text" id="timerText">٣٠</span>
+</div>
+</div>
+<div id="ruleBadge" class="rule-badge"></div>
+<div id="funFact" class="fun-fact"></div>
+<div class="question-card">
+<div class="question-text" id="questionText"></div>
+<div class="options-list" id="optionsList"></div>
+<div class="feedback" id="feedback"></div>
+<button class="next-btn" id="nextBtn" onclick="nextQuestion()">السؤال التالي ←</button>
+</div>
+</div>
+
+<div class="score-section" id="scoreSection">
+<div class="score-user-info" id="scoreUserInfo">
+<div class="score-user-avatar">👷</div>
+<div>
+<div class="score-user-name" id="scoreUserName"></div>
+<div class="score-user-id" id="scoreUserId"></div>
+</div>
+</div>
+<div class="score-circle">
+<svg viewBox="0 0 160 160">
+<circle class="track"/>
+<circle class="fill-circle" id="scoreFillCircle"/>
+</svg>
+<span class="score-value" id="scoreValue">0</span>
+<span class="score-label" id="scoreTotalLabel"></span>
+</div>
+<h2 id="scoreTitle"></h2>
+<p class="score-message" id="scoreMessage"></p>
+<div class="score-stats">
+<div class="stat-card correct-stat">
+<div class="stat-num" id="correctCount">0</div>
+<div class="stat-txt">إجابة صحيحة</div>
+</div>
+<div class="stat-card wrong-stat">
+<div class="stat-num" id="wrongCount">0</div>
+<div class="stat-txt">إجابة خاطئة</div>
+</div>
+</div>
+<button class="download-btn" onclick="downloadResult()" id="downloadBtn">
+<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+<span id="downloadBtnText">تحميل النتيجة</span>
+</button>
+<button class="restart-btn" onclick="restartQuiz()">أعد الاختبار 🔄</button>
+<button class="home-btn-bottom" onclick="goHome()">الرئيسية 🏠</button>
+</div>
+```
+
+</div>
+</div>
+
+<div class="confetti-container" id="confettiContainer"></div>
+
+<!-- WATERMARK -->
+
+<div class="watermark">
+<span>©</span> NAIFO
+</div>
+
+<script>
+const arabicNums = n => n.toString().replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+
+// ===== I18N SYSTEM =====
+let lang = 'ar';
+const fmtNum = n => lang === 'ar' ? arabicNums(n) : n.toString();
+// L() defined after data sections
+
+const UI = {
+ar: { regTitle:"سجّل بياناتك", regSub:"أدخل اسمك ورقمك الوظيفي للبدء", labelName:"الاسم الكامل", labelId:"الرقم الوظيفي", regBtn:"ابدأ", download:"تحميل النتيجة", badge:"الشركة السعودية للكهرباء", title:"قواعد الحفاظ على الحياة", subtitle:"تعلّم القواعد أولاً، ثم اختبر معرفتك", learnTitle:"تعلّم القواعد", learnDesc:"تصفّح القواعد العشر مع معلومات مثيرة وتفاصيل كل قاعدة", quizTitle:"ابدأ الاختبار", quizDesc:"٢٢ سؤال تفاعلي مع معلومة مثيرة قبل كل سؤال", back:"الرجوع للرئيسية", ruleOf:(c,t)=>`القاعدة ${fmtNum(c)} من ${fmtNum(t)}`, whatToDo:"ما يجب عليك فعله", prev:"→ السابق", next:"التالي ←", startQuiz:"ابدأ الاختبار ⚡", progress:"التقدم", nextQ:"السؤال التالي ←", showResult:"عرض النتيجة ←", timeUp:"⏱️ انتهى الوقت!", correctTxt:"إجابة صحيحة", wrongTxt:"إجابة خاطئة", restart:"أعد الاختبار 🔄", home:"الرئيسية 🏠", of:"من", stopTitle:"أوقف العمل غير الآمن", stopSub:"جميع الموظفين والمقاولين لديهم الصلاحية لإيقاف أي عمل غير آمن", perfect:{t:"🏆 أداء مثالي!",m:"أنت بطل السلامة! معرفتك ممتازة."}, great:{t:"👏 أداء رائع!",m:"معرفتك جيدة جدًا. راجع القواعد التي أخطأت فيها!"}, good:{t:"💪 أداء جيد",m:"أنت على الطريق الصحيح! راجع القواعد مرة أخرى."}, needReview:{t:"📖 تحتاج مراجعة",m:"راجع القواعد بعناية ثم أعد الاختبار."} },
+en: { regTitle:"Register Your Info", regSub:"Enter your name and employee ID to start", labelName:"Full Name", labelId:"Employee ID", regBtn:"Start", download:"Download Result", badge:"Saudi Electricity Company", title:"Life Saving Rules", subtitle:"Learn the rules first, then test your knowledge", learnTitle:"Learn the Rules", learnDesc:"Browse all 10 rules with interesting facts and details", quizTitle:"Start the Quiz", quizDesc:"22 interactive questions with a fun fact before each", back:"Back to Home", ruleOf:(c,t)=>`Rule ${c} of ${t}`, whatToDo:"What you must do", prev:"← Previous", next:"Next →", startQuiz:"Start Quiz ⚡", progress:"Progress", nextQ:"Next Question →", showResult:"Show Result →", timeUp:"⏱️ Time's up!", correctTxt:"Correct", wrongTxt:"Wrong", restart:"Restart Quiz 🔄", home:"Home 🏠", of:"of", stopTitle:"Stop Unsafe Work", stopSub:"All employees and contractors have the authority to stop any unsafe work", perfect:{t:"🏆 Perfect Score!",m:"You're a safety champion! Excellent knowledge."}, great:{t:"👏 Great Job!",m:"Very good! Review the rules you missed."}, good:{t:"💪 Good Effort",m:"You're on the right track! Review again."}, needReview:{t:"📖 Needs Review",m:"Review the rules carefully and retake the quiz."} },
+bn: { regTitle:"আপনার তথ্য নিবন্ধন করুন", regSub:"শুরু করতে আপনার নাম ও কর্মী নম্বর লিখুন", labelName:"পূর্ণ নাম", labelId:"কর্মী নম্বর", regBtn:"শুরু করুন", download:"ফলাফল ডাউনলোড", badge:"সৌদি ইলেকট্রিসিটি কোম্পানি", title:"জীবন রক্ষাকারী নিয়মাবলী", subtitle:"প্রথমে নিয়মগুলো শিখুন, তারপর আপনার জ্ঞান পরীক্ষা করুন", learnTitle:"নিয়মগুলো শিখুন", learnDesc:"১০টি নিয়ম তথ্য ও বিস্তারিতসহ দেখুন", quizTitle:"পরীক্ষা শুরু করুন", quizDesc:"প্রতিটি প্রশ্নের আগে মজার তথ্যসহ ২২টি প্রশ্ন", back:"হোমে ফিরুন", ruleOf:(c,t)=>`নিয়ম ${c} এর মধ্যে ${t}`, whatToDo:"আপনাকে যা করতে হবে", prev:"← আগের", next:"পরবর্তী →", startQuiz:"পরীক্ষা শুরু ⚡", progress:"অগ্রগতি", nextQ:"পরবর্তী প্রশ্ন →", showResult:"ফলাফল দেখুন →", timeUp:"⏱️ সময় শেষ!", correctTxt:"সঠিক", wrongTxt:"ভুল", restart:"আবার পরীক্ষা দিন 🔄", home:"হোম 🏠", of:"এর মধ্যে", stopTitle:"অনিরাপদ কাজ বন্ধ করুন", stopSub:"সকল কর্মী ও ঠিকাদারের যেকোনো অনিরাপদ কাজ বন্ধ করার ক্ষমতা আছে", perfect:{t:"🏆 নিখুঁত স্কোর!",m:"আপনি নিরাপত্তা চ্যাম্পিয়ন! আপনার জ্ঞান চমৎকার।"}, great:{t:"👏 দারুণ!",m:"খুব ভালো! যেগুলো ভুল হয়েছে সেগুলো আবার দেখুন।"}, good:{t:"💪 ভালো চেষ্টা",m:"সঠিক পথে আছেন! আবার পড়ুন।"}, needReview:{t:"📖 পুনরায় পড়ুন",m:"নিয়মগুলো ভালোভাবে পড়ে আবার পরীক্ষা দিন।"} },
+ur: { regTitle:"اپنی معلومات درج کریں", regSub:"شروع کرنے کے لیے اپنا نام اور ملازم نمبر درج کریں", labelName:"پورا نام", labelId:"ملازم نمبر", regBtn:"شروع کریں", download:"نتیجہ ڈاؤنلوڈ کریں", badge:"سعودی الیکٹرسٹی کمپنی", title:"زندگی بچانے والے اصول", subtitle:"پہلے اصول سیکھیں، پھر اپنا علم جانچیں", learnTitle:"اصول سیکھیں", learnDesc:"دلچسپ معلومات کے ساتھ دس اصول دیکھیں", quizTitle:"ٹیسٹ شروع کریں", quizDesc:"ہر سوال سے پہلے دلچسپ معلومات کے ساتھ سوالات", back:"ہوم پر واپس جائیں", ruleOf:(c,t)=>`اصول ${fmtNum(c)} از ${fmtNum(t)}`, whatToDo:"آپ کو کیا کرنا ہے", prev:"→ پچھلا", next:"اگلا ←", startQuiz:"ٹیسٹ شروع کریں ⚡", progress:"پیشرفت", nextQ:"اگلا سوال ←", showResult:"نتیجہ دیکھیں ←", timeUp:"⏱️ وقت ختم!", correctTxt:"صحیح جواب", wrongTxt:"غلط جواب", restart:"دوبارہ ٹیسٹ دیں 🔄", home:"ہوم 🏠", of:"از", stopTitle:"غیر محفوظ کام روکیں", stopSub:"تمام ملازمین اور ٹھیکیداروں کو غیر محفوظ کام روکنے کا اختیار ہے", perfect:{t:"🏆 بہترین!",m:"آپ حفاظت کے چیمپئن ہیں! آپ کا علم شاندار ہے۔"}, great:{t:"👏 زبردست!",m:"بہت اچھا! غلط جوابات والے اصول دوبارہ دیکھیں۔"}, good:{t:"💪 اچھی کوشش",m:"آپ صحیح راستے پر ہیں! دوبارہ پڑھیں۔"}, needReview:{t:"📖 نظرثانی کی ضرورت",m:"اصول غور سے پڑھیں اور دوبارہ ٹیسٹ دیں۔"} },
+hi: { regTitle:"अपनी जानकारी दर्ज करें", regSub:"शुरू करने के लिए अपना नाम और कर्मचारी नंबर डालें", labelName:"पूरा नाम", labelId:"कर्मचारी नंबर", regBtn:"शुरू करें", download:"रिजल्ट डाउनलोड करें", badge:"सऊदी इलेक्ट्रिसिटी कंपनी", title:"जान बचाने के नियम", subtitle:"पहले नियम सीखो, फिर अपना ज्ञान जांचो", learnTitle:"नियम सीखो", learnDesc:"दिलचस्प जानकारी के साथ 10 नियम देखो", quizTitle:"टेस्ट शुरू करो", quizDesc:"हर सवाल से पहले दिलचस्प जानकारी के साथ सवाल", back:"होम पर वापस जाओ", ruleOf:(c,t)=>`नियम ${c} में से ${t}`, whatToDo:"आपको क्या करना है", prev:"← पिछला", next:"अगला →", startQuiz:"टेस्ट शुरू करो ⚡", progress:"प्रगति", nextQ:"अगला सवाल →", showResult:"रिजल्ट देखो →", timeUp:"⏱️ टाइम खत्म!", correctTxt:"सही जवाब", wrongTxt:"गलत जवाब", restart:"दोबारा टेस्ट दो 🔄", home:"होम 🏠", of:"में से", stopTitle:"असुरक्षित काम रोको", stopSub:"सभी कर्मचारियों और ठेकेदारों को असुरक्षित काम रोकने का अधिकार है", perfect:{t:"🏆 बेस्ट!",m:"आप सेफ्टी चैंपियन हो! आपका ज्ञान शानदार है।"}, great:{t:"👏 शाबाश!",m:"बहुत अच्छा! गलत जवाब वाले नियम दोबारा देखो।"}, good:{t:"💪 अच्छी कोशिश",m:"सही राह पर हो! दोबारा पढ़ो।"}, needReview:{t:"📖 दोबारा पढ़ो",m:"नियम ध्यान से पढ़ो और दोबारा टेस्ट दो।"} }
+};
+
+// English Rules Data
+const rulesDataEN = [
+{number:1,name:"Energy Isolation",subtitle:"Verify isolation and zero energy before work",icon:"🔌",funFact:"Electrical shocks cause over <strong>160 deaths/year</strong>. LOTO saved <strong>120,000+ workers</strong>!",funIcon:"⚡",details:[{icon:"🔍",text:"Identify all energy sources connected to equipment"},{icon:"🔒",text:"Isolate all energy sources, apply locks and tags"},{icon:"⚡",text:"Verify no residual or stored energy remains"},{icon:"🧪",text:"Test for stored energy using approved devices"},{icon:"🛡️",text:"Never start work until all sources are isolated and safe"}]},
+{number:2,name:"Work Permit",subtitle:"Work with a valid permit when required",icon:"📋",funFact:"Work permits reduce serious incidents by <strong>40%</strong>! A permit is a <strong>life document</strong>.",funIcon:"📋",details:[{icon:"✅",text:"Confirm whether a permit is required"},{icon:"👷",text:"Be authorized and qualified for the work"},{icon:"📖",text:"Fully understand the permit"},{icon:"🔐",text:"Ensure risks are controlled before starting"},{icon:"⏸️",text:"Stop and reassess if conditions change"},{icon:"📝",text:"Apply all requirements including permit closure"}]},
+{number:3,name:"Personal Protective Equipment",subtitle:"Wear and use the right PPE for the task",icon:"🦺",funFact:"PPE reduces injuries by <strong>60%</strong>! A helmet absorbs <strong>450 kg</strong> of force.",funIcon:"🛡️",details:[{icon:"📋",text:"Use additional PPE as required by work permit"},{icon:"📌",text:"Use PPE as specified by signage and instructions"},{icon:"🔍",text:"Regularly inspect your PPE condition"},{icon:"👥",text:"Hold others accountable for not wearing required PPE"}]},
+{number:4,name:"Working at Heights",subtitle:"Protect yourself from falls",icon:"🏗️",funFact:"Falls are the <strong>#1 cause of death</strong> in construction worldwide!",funIcon:"⬆️",details:[{icon:"🔍",text:"Inspect fall protection before each use"},{icon:"🔧",text:"Secure tools and materials to prevent dropping"},{icon:"🔗",text:"Maintain 100% tie-off at approved anchor points"}]},
+{number:5,name:"Overriding Safety Controls",subtitle:"Get authorization before overriding safety controls",icon:"🚧",funFact:"Over <strong>70% of major incidents</strong> from bypassing safety controls!",funIcon:"🚨",details:[{icon:"📖",text:"Understand and use safety equipment for your task"},{icon:"🚫",text:"Get authorization before disabling safety controls"},{icon:"↩️",text:"Get authorization before deviating from procedures"},{icon:"🔶",text:"Get authorization before crossing barriers"}]},
+{number:6,name:"Hot Work",subtitle:"Control flammables and ignition sources",icon:"🔥",funFact:"A welding spark reaches <strong>5,500°C</strong>!",funIcon:"🔥",details:[{icon:"🎯",text:"Identify and control ignition sources"},{icon:"🧹",text:"Remove or isolate flammable materials"},{icon:"📝",text:"Obtain proper authorization"},{icon:"🧪",text:"Complete gas testing in hazardous areas"},{icon:"📊",text:"Monitor gases continuously"}]},
+{number:7,name:"Confined Space Entry",subtitle:"Get authorization before entering",icon:"🚪",funFact:"Oxygen deficiency causes unconsciousness in <strong>under 15 seconds</strong>!",funIcon:"⚠️",details:[{icon:"🔌",text:"Confirm energy sources are isolated"},{icon:"🌬️",text:"Ensure atmosphere is tested and monitored"},{icon:"😷",text:"Check breathing apparatus"},{icon:"👀",text:"Ensure standby person is present"},{icon:"🆘",text:"Confirm rescue plan is ready"},{icon:"📋",text:"Obtain entry permit"}]},
+{number:8,name:"Working in Danger Zone",subtitle:"Keep yourself away from danger zones",icon:"⚠️",funFact:"Falling objects cause over <strong>25%</strong> of fatal injuries!",funIcon:"🚨",details:[{icon:"📍",text:"Position to avoid moving objects, vehicles, pressurized releases, and falling objects"},{icon:"🚧",text:"Establish and respect barriers and exclusion zones"},{icon:"🔩",text:"Secure unsecured objects, report potential drops"},{icon:"🔍",text:"Ensure pressurized hoses have inspection devices"}]},
+{number:9,name:"Lifting Operations",subtitle:"Plan lifts and control the area",icon:"🏗️",funFact:"Walking under a suspended 1-ton load = under a <strong>car in mid-air</strong>!",funIcon:"🏋️",details:[{icon:"🔍",text:"Confirm equipment and load are inspected"},{icon:"🎓",text:"Only use equipment you're trained on"},{icon:"📋",text:"Have a lift plan and risk assessment"},{icon:"🚧",text:"Establish and respect barriers"},{icon:"🚫",text:"Never walk under a suspended load"}]},
+{number:10,name:"Driving Vehicles or Equipment",subtitle:"Follow safe driving instructions",icon:"🚗",funFact:"Phone use while driving increases crash risk by <strong>4x</strong>!",funIcon:"🚨",details:[{icon:"🔗",text:"Always wear your seatbelt"},{icon:"⏱️",text:"Do not exceed speed limits"},{icon:"📵",text:"Do not use phone while driving"},{icon:"👁️",text:"Be fit, alert, and fully focused"},{icon:"↔️",text:"Maintain safe following distance"}]},
+{number:"✋",name:"Stop Unsafe Work",subtitle:"I protect my life and others' lives by using my authority to stop unsafe work",icon:"🛑",isSpecial:true,funFact:"All employees and contractors have <strong>full authority</strong> to stop unsafe work! You are responsible for your safety <strong>and others' safety</strong>.",funIcon:"✋",details:[{icon:"⚡",text:"Stop work if energy has not been isolated and verified through testing"},{icon:"🦺",text:"Stop work when proper PPE is not being worn"},{icon:"📋",text:"Stop work if safety procedures are not being followed correctly"},{icon:"👥",text:"I am responsible for my safety and the safety of others"}]}
+];
+
+// English Quiz Data
+const quizDataEN = [
+{rule:1,ruleName:"Energy Isolation",ruleDesc:"Verify isolation and zero energy",funFact:"Stored energy can remain <strong>dangerous for hours</strong>!",funIcon:"⚡",question:"What must you do before work on electrical equipment?",options:["Start immediately","Identify, isolate all energy sources, apply locks and tags","Just inform colleagues","Just wear gloves"],correct:1,feedback_correct:"Excellent! Identify, isolate, and apply locks and tags.",feedback_wrong:"Correct: Identify and isolate all energy sources, apply locks and tags."},
+{rule:1,ruleName:"Energy Isolation",ruleDesc:"Verify isolation and zero energy",funFact:"LOTO has saved <strong>120,000+ workers</strong>!",funIcon:"🔒",question:"What is the purpose of locks and warning tags?",options:["Decorating equipment","Preventing restart of energy sources during work","Identifying ownership","Recording start time"],correct:1,feedback_correct:"Correct! They prevent unintentional restart.",feedback_wrong:"Locks and tags prevent anyone from restarting energy during work."},
+{rule:2,ruleName:"Work Permit",ruleDesc:"Work with a valid permit",funFact:"Permits reduce incidents by <strong>40%</strong>!",funIcon:"📋",question:"When should you stop and reassess?",options:["Only when tired","If conditions change from the permit","At break time","Never"],correct:1,feedback_correct:"Correct! Stop immediately if conditions change.",feedback_wrong:"If conditions change, stop immediately and reassess."},
+{rule:2,ruleName:"Work Permit",ruleDesc:"Work with a valid permit",funFact:"Every worker must be <strong>authorized and qualified</strong>.",funIcon:"✅",question:"Which is NOT a permit requirement?",options:["Confirm permit is needed","Understand the permit","Start work without controlling hazards","Apply all requirements"],correct:2,feedback_correct:"Exactly! Never start without controlling hazards.",feedback_wrong:"Starting without hazard control violates safety rules."},
+{rule:3,ruleName:"PPE",ruleDesc:"Wear the right PPE",funFact:"A helmet absorbs <strong>450 kg</strong> of force!",funIcon:"🦺",question:"What determines additional PPE needed?",options:["Worker preference","Work permit or instructions","Stock availability","Colleagues' decision"],correct:1,feedback_correct:"Great! Permit and instructions determine PPE.",feedback_wrong:"Additional PPE is determined by permits or instructions."},
+{rule:3,ruleName:"PPE",ruleDesc:"Wear the right PPE",funFact:"PPE reduces injuries by <strong>60%</strong>!",funIcon:"🛡️",question:"What if a colleague isn't wearing required PPE?",options:["Nothing","Hold them accountable","Report secretly","Give them yours"],correct:1,feedback_correct:"Excellent! Hold others accountable.",feedback_wrong:"You must hold others accountable for PPE."},
+{rule:3,ruleName:"PPE",ruleDesc:"Wear the right PPE",funFact:"PPE inspection takes <strong>2 minutes</strong> but saves lives!",funIcon:"🔍",question:"How often should PPE be inspected?",options:["Once when bought","Regularly and routinely","Only after injury","Once a year"],correct:1,feedback_correct:"Correct! Regular routine inspection required.",feedback_wrong:"PPE inspection must be regular and routine."},
+{rule:4,ruleName:"Working at Heights",ruleDesc:"Protect from falls",funFact:"A fall from <strong>6 meters</strong> can be fatal!",funIcon:"⬆️",question:"When inspect fall protection?",options:["Monthly","Before each use","If looks damaged","When purchased"],correct:1,feedback_correct:"Great! Inspect before every use.",feedback_wrong:"Must be inspected before each use."},
+{rule:4,ruleName:"Working at Heights",ruleDesc:"Protect from falls",funFact:"A <strong>1kg</strong> tool from 30m reaches <strong>87 km/h</strong>!",funIcon:"🔧",question:"Why secure tools at heights?",options:["Prevent theft","Prevent falling on workers below","Easy access","Admin requirement"],correct:1,feedback_correct:"Correct! Prevent falling on workers below.",feedback_wrong:"Tools must be secured to prevent falling on people below."},
+{rule:4,ruleName:"Working at Heights",ruleDesc:"Protect from falls",funFact:"100% tie-off = <strong>never unprotected</strong>!",funIcon:"🔗",question:"What does 100% tie-off mean?",options:["Tie equipment only","Continuously tied to anchor points outside protected areas","Tie when feeling danger","Tie tools to belt"],correct:1,feedback_correct:"Excellent! Never disconnect from anchor points.",feedback_wrong:"100% tie-off = continuously connected outside protected areas."},
+{rule:5,ruleName:"Overriding Safety Controls",ruleDesc:"Get authorization first",funFact:"<strong>70% of major incidents</strong> from bypassing safety!",funIcon:"🚨",question:"What's needed before disabling safety controls?",options:["Colleagues' OK","Formal prior authorization","Nothing in emergencies","Sufficient experience"],correct:1,feedback_correct:"Correct! Formal authorization required.",feedback_wrong:"Formal authorization is always required."},
+{rule:5,ruleName:"Overriding Safety Controls",ruleDesc:"Get authorization first",funFact:"Barriers are <strong>lines of defense</strong>!",funIcon:"🚧",question:"Which requires prior authorization?",options:["Only crossing barriers","Only deviating procedures","All: disabling controls, deviating, crossing barriers","None"],correct:2,feedback_correct:"Exactly! All require authorization.",feedback_wrong:"All of these require prior authorization."},
+{rule:6,ruleName:"Hot Work",ruleDesc:"Control flammables",funFact:"A welding spark reaches <strong>5,500°C</strong>!",funIcon:"🔥",question:"First step before hot work?",options:["Start if looks safe","Identify ignition sources, remove flammables","Just inform colleagues","Just wear glasses"],correct:1,feedback_correct:"Excellent! Identify sources and remove flammables.",feedback_wrong:"Must identify ignition sources and remove flammables."},
+{rule:6,ruleName:"Hot Work",ruleDesc:"Control flammables",funFact:"Hot work without gas testing = <strong>minefield</strong>!",funIcon:"🧪",question:"For hot work in hazardous area?",options:["Extinguisher only","Gas testing and continuous monitoring","Verbal approval","Water available"],correct:1,feedback_correct:"Correct! Gas testing and monitoring required.",feedback_wrong:"Gas testing and continuous monitoring required."},
+{rule:7,ruleName:"Confined Space",ruleDesc:"Get authorization before entry",funFact:"O₂ deficiency = unconscious in <strong><15 seconds</strong>!",funIcon:"😷",question:"Which is NOT a confined space requirement?",options:["Atmosphere testing","Standby person","Entry without permit if quick","Rescue plan"],correct:2,feedback_correct:"Exactly! No entry without permit ever.",feedback_wrong:"Entry without permit is absolutely prohibited!"},
+{rule:7,ruleName:"Confined Space",ruleDesc:"Get authorization before entry",funFact:"<strong>60% of confined space deaths</strong> are untrained rescuers!",funIcon:"🆘",question:"Why standby person throughout?",options:["Log hours","Monitor safety and emergencies","Fetch equipment","Just tradition"],correct:1,feedback_correct:"Great! Safety monitoring and emergency response.",feedback_wrong:"Standby monitors safety and responds to emergencies."},
+{rule:8,ruleName:"Danger Zone",ruleDesc:"Stay away from danger zones",funFact:"Falling objects cause <strong>25%+</strong> of fatal injuries!",funIcon:"⚠️",question:"What hazards to avoid?",options:["Moving objects, vehicles, pressure releases, falling objects","Noise only","Heat only","Poor lighting"],correct:0,feedback_correct:"Correct! Avoid all these hazards.",feedback_wrong:"Hazards: moving objects, vehicles, pressure, falling objects."},
+{rule:8,ruleName:"Danger Zone",ruleDesc:"Stay away from danger zones",funFact:"Uninspected hose = <strong>bone-breaking</strong> force!",funIcon:"💨",question:"What about pressurized hoses?",options:["Must be new","Must have inspection devices","Must be colored","Must be short"],correct:1,feedback_correct:"Excellent! Must have inspection devices.",feedback_wrong:"Hoses must have safety inspection devices."},
+{rule:9,ruleName:"Lifting Operations",ruleDesc:"Plan lifts and control area",funFact:"Under suspended load = under a <strong>car in mid-air</strong>!",funIcon:"🏗️",question:"Absolute lifting rule?",options:["Use any equipment","Never walk under suspended load","Skip plan for light loads","Cross exclusion zones"],correct:1,feedback_correct:"Correct! Never walk under a suspended load.",feedback_wrong:"Absolute: Never walk under a suspended load."},
+{rule:9,ruleName:"Lifting Operations",ruleDesc:"Plan lifts and control area",funFact:"Untrained equipment use = <strong>300%</strong> more accidents!",funIcon:"🎓",question:"Requirement for lifting equipment?",options:["Available on site","You've been trained on it","Colleagues approve","It's new"],correct:1,feedback_correct:"Great! Only use what you're trained on.",feedback_wrong:"Only use equipment you've been trained on."},
+{rule:10,ruleName:"Driving",ruleDesc:"Follow safe driving rules",funFact:"Phone use = <strong>4x</strong> crash risk!",funIcon:"📵",question:"Which violates safe driving?",options:["Wearing seatbelt","Safe distance","Using phone while driving","Planning route"],correct:2,feedback_correct:"Correct! Phone use while driving is prohibited.",feedback_wrong:"Phone use while driving is a serious violation."},
+{rule:10,ruleName:"Driving",ruleDesc:"Follow safe driving rules",funFact:"Seatbelts reduce death risk by <strong>45%</strong>!",funIcon:"🔗",question:"Required state while driving?",options:["Focus on passengers","Be fit, alert, fully focused","Drive when exhausted","Rely on experience"],correct:1,feedback_correct:"Excellent! Be fit, alert, fully focused.",feedback_wrong:"Must be fit, alert, and fully focused."},
+{rule:"✋",ruleName:"Stop Unsafe Work",ruleDesc:"Your authority to stop unsafe work",funFact:"Every employee and contractor has <strong>full authority</strong> to stop unsafe work!",funIcon:"✋",question:"Who has the authority to stop unsafe work?",options:["Only the manager","Only the safety officer","All employees and contractors","Only government agencies"],correct:2,feedback_correct:"Exactly! All employees and contractors can stop unsafe work.",feedback_wrong:"All employees and contractors have full authority to stop unsafe work."},
+{rule:"✋",ruleName:"Stop Unsafe Work",ruleDesc:"Your authority to stop unsafe work",funFact:"Stopping unsafe work can <strong>save your colleagues' lives</strong>!",funIcon:"🛑",question:"In which cases should work be stopped?",options:["Only when PPE is not worn","Only when energy is not isolated","All: no energy isolation, no PPE, safety procedures not followed","Work should never be stopped"],correct:2,feedback_correct:"Correct! Stop work in all these cases.",feedback_wrong:"Stop work for: no energy isolation, no PPE, and safety procedures not followed."}
+];
+
+// Bengali Rules Data
+const rulesDataBN = [
+{number:1,name:"শক্তি বিচ্ছিন্নকরণ",subtitle:"কাজ শুরুর আগে বিচ্ছিন্নতা ও শূন্য শক্তি যাচাই করুন",icon:"🔌",funFact:"বৈদ্যুতিক শক প্রতি বছর <strong>১৬০+ মৃত্যু</strong> ঘটায়। LOTO <strong>১,২০,০০০+ শ্রমিকের</strong> জীবন বাঁচিয়েছে!",funIcon:"⚡",details:[{icon:"🔍",text:"সরঞ্জামের সাথে সংযুক্ত সমস্ত শক্তির উৎস চিহ্নিত করুন"},{icon:"🔒",text:"সমস্ত শক্তির উৎস বিচ্ছিন্ন করুন, লক ও ট্যাগ লাগান"},{icon:"⚡",text:"অবশিষ্ট বা সঞ্চিত শক্তি নেই তা যাচাই করুন"},{icon:"🧪",text:"অনুমোদিত যন্ত্র দিয়ে সঞ্চিত শক্তি পরীক্ষা করুন"},{icon:"🛡️",text:"সব উৎস নিরাপদ না হওয়া পর্যন্ত কাজ শুরু করবেন না"}]},
+{number:2,name:"কাজের অনুমতিপত্র",subtitle:"প্রয়োজন হলে বৈধ অনুমতিপত্র নিয়ে কাজ করুন",icon:"📋",funFact:"কাজের অনুমতিপত্র গুরুতর দুর্ঘটনা <strong>৪০%</strong> কমায়! এটি একটি <strong>জীবন দলিল</strong>।",funIcon:"📋",details:[{icon:"✅",text:"অনুমতিপত্র প্রয়োজন কিনা নিশ্চিত করুন"},{icon:"👷",text:"কাজের জন্য অনুমোদিত ও যোগ্য হন"},{icon:"📖",text:"অনুমতিপত্র সম্পূর্ণ বুঝুন"},{icon:"🔐",text:"ঝুঁকি নিয়ন্ত্রিত আছে নিশ্চিত করুন"},{icon:"⏸️",text:"পরিস্থিতি পরিবর্তন হলে থামুন ও পুনরায় মূল্যায়ন করুন"},{icon:"📝",text:"বন্ধ করা সহ সমস্ত শর্ত মানুন"}]},
+{number:3,name:"ব্যক্তিগত সুরক্ষা সরঞ্জাম",subtitle:"কাজের জন্য সঠিক PPE পরুন ও ব্যবহার করুন",icon:"🦺",funFact:"PPE আঘাত <strong>৬০%</strong> কমায়! একটি হেলমেট <strong>৪৫০ কেজি</strong> শক্তি শোষণ করে।",funIcon:"🛡️",details:[{icon:"📋",text:"কাজের অনুমতিপত্র অনুযায়ী অতিরিক্ত PPE ব্যবহার করুন"},{icon:"📌",text:"সাইনবোর্ড ও নির্দেশনা অনুযায়ী PPE ব্যবহার করুন"},{icon:"🔍",text:"নিয়মিত আপনার PPE পরীক্ষা করুন"},{icon:"👥",text:"অন্যরা PPE না পরলে তাদের জবাবদিহি করুন"}]},
+{number:4,name:"উঁচুতে কাজ",subtitle:"উঁচুতে কাজ করার সময় পতন থেকে নিজেকে রক্ষা করুন",icon:"🏗️",funFact:"পতন হলো নির্মাণে <strong>মৃত্যুর ১ নম্বর কারণ</strong>!",funIcon:"⬆️",details:[{icon:"🔍",text:"প্রতিবার ব্যবহারের আগে পতন সুরক্ষা সরঞ্জাম পরীক্ষা করুন"},{icon:"🔧",text:"যন্ত্রপাতি পড়ে যাওয়া রোধে সুরক্ষিত করুন"},{icon:"🔗",text:"সুরক্ষিত এলাকার বাইরে ১০০% বাঁধা থাকুন"}]},
+{number:5,name:"নিরাপত্তা নিয়ন্ত্রণ অতিক্রম",subtitle:"নিরাপত্তা নিয়ন্ত্রণ অক্ষম করার আগে অনুমতি নিন",icon:"🚧",funFact:"<strong>৭০%+ বড় দুর্ঘটনা</strong> নিরাপত্তা অতিক্রমের কারণে!",funIcon:"🚨",details:[{icon:"📖",text:"আপনার কাজের জন্য নিরাপত্তা সরঞ্জাম বুঝুন ও ব্যবহার করুন"},{icon:"🚫",text:"নিরাপত্তা নিয়ন্ত্রণ অক্ষমের আগে অনুমতি নিন"},{icon:"↩️",text:"পদ্ধতি থেকে বিচ্যুতির আগে অনুমতি নিন"},{icon:"🔶",text:"বাধা অতিক্রমের আগে অনুমতি নিন"}]},
+{number:6,name:"গরম কাজ",subtitle:"দাহ্য পদার্থ ও আগুনের উৎস নিয়ন্ত্রণ করুন",icon:"🔥",funFact:"ওয়েল্ডিং স্পার্ক <strong>৫,৫০০°C</strong> পর্যন্ত পৌঁছায়!",funIcon:"🔥",details:[{icon:"🎯",text:"আগুনের উৎস চিহ্নিত ও নিয়ন্ত্রণ করুন"},{icon:"🧹",text:"দাহ্য পদার্থ সরান বা আলাদা করুন"},{icon:"📝",text:"যথাযথ অনুমোদন নিন"},{icon:"🧪",text:"বিপজ্জনক এলাকায় গ্যাস পরীক্ষা সম্পন্ন করুন"},{icon:"📊",text:"ক্রমাগত গ্যাস পর্যবেক্ষণ করুন"}]},
+{number:7,name:"আবদ্ধ স্থানে প্রবেশ",subtitle:"আবদ্ধ স্থানে প্রবেশের আগে অনুমতি নিন",icon:"🚪",funFact:"অক্সিজেন ঘাটতিতে <strong>১৫ সেকেন্ডেরও কম</strong> সময়ে অজ্ঞান হতে পারেন!",funIcon:"⚠️",details:[{icon:"🔌",text:"শক্তির উৎস বিচ্ছিন্ন আছে নিশ্চিত করুন"},{icon:"🌬️",text:"বায়ুমণ্ডল পরীক্ষিত ও পর্যবেক্ষিত আছে নিশ্চিত করুন"},{icon:"😷",text:"শ্বাসযন্ত্র পরীক্ষা করুন"},{icon:"👀",text:"পুরো সময় একজন পর্যবেক্ষক থাকুক"},{icon:"🆘",text:"উদ্ধার পরিকল্পনা প্রস্তুত আছে নিশ্চিত করুন"},{icon:"📋",text:"প্রবেশের অনুমতিপত্র নিন"}]},
+{number:8,name:"বিপদ অঞ্চলে কাজ",subtitle:"নিজেকে ও অন্যদের বিপদ অঞ্চল থেকে দূরে রাখুন",icon:"⚠️",funFact:"পতনশীল বস্তু <strong>২৫%+</strong> মারাত্মক আঘাতের কারণ!",funIcon:"🚨",details:[{icon:"📍",text:"চলমান বস্তু, যানবাহন, চাপ মুক্তি ও পতনশীল বস্তু এড়িয়ে অবস্থান নিন"},{icon:"🚧",text:"বাধা ও নিষিদ্ধ অঞ্চল স্থাপন ও মেনে চলুন"},{icon:"🔩",text:"অসুরক্ষিত বস্তু সুরক্ষিত করুন"},{icon:"🔍",text:"চাপযুক্ত পায়ের পাইপে পরীক্ষা যন্ত্র আছে নিশ্চিত করুন"}]},
+{number:9,name:"উত্তোলন কার্যক্রম",subtitle:"উত্তোলন পরিকল্পনা করুন ও এলাকা নিয়ন্ত্রণ করুন",icon:"🏗️",funFact:"ঝুলন্ত বোঝার নিচে হাঁটা = <strong>শূন্যে ঝুলন্ত গাড়ির</strong> নিচে হাঁটা!",funIcon:"🏋️",details:[{icon:"🔍",text:"সরঞ্জাম ও বোঝা পরীক্ষিত নিশ্চিত করুন"},{icon:"🎓",text:"শুধু প্রশিক্ষণপ্রাপ্ত সরঞ্জাম ব্যবহার করুন"},{icon:"📋",text:"উত্তোলন পরিকল্পনা ও ঝুঁকি মূল্যায়ন করুন"},{icon:"🚧",text:"বাধা ও নিষিদ্ধ অঞ্চল মেনে চলুন"},{icon:"🚫",text:"কখনোই ঝুলন্ত বোঝার নিচে হাঁটবেন না"}]},
+{number:10,name:"যানবাহন বা সরঞ্জাম চালনা",subtitle:"নিরাপদ চালনা নির্দেশনা অনুসরণ করুন",icon:"🚗",funFact:"চালনার সময় ফোন ব্যবহারে দুর্ঘটনার ঝুঁকি <strong>৪ গুণ</strong> বাড়ে!",funIcon:"🚨",details:[{icon:"🔗",text:"সবসময় সিটবেল্ট পরুন"},{icon:"⏱️",text:"গতিসীমা অতিক্রম করবেন না"},{icon:"📵",text:"চালনার সময় ফোন ব্যবহার করবেন না"},{icon:"👁️",text:"সজাগ, মনোযোগী ও সম্পূর্ণ প্রস্তুত থাকুন"},{icon:"↔️",text:"নিরাপদ দূরত্ব বজায় রাখুন"}]},
+{number:"✋",name:"অনিরাপদ কাজ বন্ধ করুন",subtitle:"অনিরাপদ কাজ বন্ধ করার ক্ষমতা ব্যবহার করে আমি আমার ও অন্যদের জীবন রক্ষা করি",icon:"🛑",isSpecial:true,funFact:"সকল কর্মী ও ঠিকাদারের অনিরাপদ কাজ বন্ধ করার <strong>সম্পূর্ণ ক্ষমতা</strong> আছে! আপনি আপনার <strong>ও অন্যদের</strong> নিরাপত্তার জন্য দায়ী।",funIcon:"✋",details:[{icon:"⚡",text:"শক্তি বিচ্ছিন্ন ও পরীক্ষা না হলে কাজ বন্ধ করুন"},{icon:"🦺",text:"সঠিক PPE না পরলে কাজ বন্ধ করুন"},{icon:"📋",text:"নিরাপত্তা পদ্ধতি সঠিকভাবে না মানলে কাজ বন্ধ করুন"},{icon:"👥",text:"আমি আমার ও অন্যদের নিরাপত্তার জন্য দায়ী"}]}
+];
+
+// Bengali Quiz Data
+const quizDataBN = [
+{rule:1,ruleName:"শক্তি বিচ্ছিন্নকরণ",ruleDesc:"কাজ শুরুর আগে শূন্য শক্তি যাচাই করুন",funFact:"ক্যাপাসিটরে সঞ্চিত শক্তি <strong>ঘণ্টার পর ঘণ্টা বিপজ্জনক</strong> থাকতে পারে!",funIcon:"⚡",question:"বৈদ্যুতিক সরঞ্জামে কাজ শুরুর আগে কী করতে হবে?",options:["সময় বাঁচাতে সাথে সাথে শুরু করুন","সব শক্তির উৎস চিহ্নিত ও বিচ্ছিন্ন করুন, লক ও ট্যাগ লাগান","শুধু সহকর্মীদের জানান","শুধু গ্লাভস পরুন"],correct:1,feedback_correct:"চমৎকার! চিহ্নিত করুন, বিচ্ছিন্ন করুন, লক ও ট্যাগ লাগান।",feedback_wrong:"সঠিক: সব শক্তির উৎস চিহ্নিত ও বিচ্ছিন্ন করে লক ও ট্যাগ লাগান।"},
+{rule:1,ruleName:"শক্তি বিচ্ছিন্নকরণ",ruleDesc:"কাজ শুরুর আগে শূন্য শক্তি যাচাই করুন",funFact:"LOTO <strong>১,২০,০০০+</strong> শ্রমিকের জীবন বাঁচিয়েছে!",funIcon:"🔒",question:"লক ও সতর্কতা ট্যাগের উদ্দেশ্য কী?",options:["সরঞ্জাম সাজানো","কাজ চলাকালীন শক্তির উৎস পুনরায় চালু হওয়া রোধ","মালিকানা চিহ্নিত করা","কাজ শুরুর সময় রেকর্ড"],correct:1,feedback_correct:"সঠিক! লক ও ট্যাগ অনিচ্ছাকৃত পুনরায় চালু রোধ করে।",feedback_wrong:"লক ও ট্যাগ কাজ চলাকালীন শক্তির উৎস পুনরায় চালু রোধ করে।"},
+{rule:2,ruleName:"কাজের অনুমতিপত্র",ruleDesc:"বৈধ অনুমতিপত্র নিয়ে কাজ করুন",funFact:"অনুমতিপত্র দুর্ঘটনা <strong>৪০%</strong> কমায়!",funIcon:"📋",question:"কখন থামতে হবে ও পুনরায় মূল্যায়ন করতে হবে?",options:["শুধু ক্লান্ত লাগলে","অনুমতিপত্রের শর্ত পরিবর্তন হলে","বিরতির সময়","কখনোই থামবেন না"],correct:1,feedback_correct:"সঠিক! পরিস্থিতি পরিবর্তন হলে সাথে সাথে থামুন।",feedback_wrong:"পরিস্থিতি পরিবর্তন হলে সাথে সাথে থামুন ও পুনরায় মূল্যায়ন করুন।"},
+{rule:2,ruleName:"কাজের অনুমতিপত্র",ruleDesc:"বৈধ অনুমতিপত্র নিয়ে কাজ করুন",funFact:"প্রতিটি শ্রমিককে <strong>অনুমোদিত ও যোগ্য</strong> হতে হবে।",funIcon:"✅",question:"কোনটি অনুমতিপত্রের শর্ত নয়?",options:["অনুমতিপত্র প্রয়োজন নিশ্চিত করা","অনুমতিপত্র বোঝা","ঝুঁকি নিয়ন্ত্রণ ছাড়াই কাজ শুরু","সব শর্ত প্রয়োগ"],correct:2,feedback_correct:"সঠিক! ঝুঁকি নিয়ন্ত্রণ ছাড়া কাজ শুরু করা যাবে না।",feedback_wrong:"ঝুঁকি নিয়ন্ত্রণ ছাড়া কাজ শুরু নিরাপত্তা লঙ্ঘন।"},
+{rule:3,ruleName:"PPE",ruleDesc:"সঠিক PPE পরুন",funFact:"হেলমেট <strong>৪৫০ কেজি</strong> শক্তি শোষণ করে!",funIcon:"🦺",question:"অতিরিক্ত PPE কী নির্ধারণ করে?",options:["শ্রমিকের ইচ্ছা","কাজের অনুমতিপত্র বা নির্দেশনা","স্টকে আছে কিনা","সহকর্মীদের সিদ্ধান্ত"],correct:1,feedback_correct:"দারুণ! অনুমতিপত্র ও নির্দেশনা PPE নির্ধারণ করে।",feedback_wrong:"অতিরিক্ত PPE অনুমতিপত্র বা নির্দেশনা দ্বারা নির্ধারিত।"},
+{rule:3,ruleName:"PPE",ruleDesc:"সঠিক PPE পরুন",funFact:"PPE আঘাত <strong>৬০%</strong> কমায়!",funIcon:"🛡️",question:"সহকর্মী PPE না পরলে কী করবেন?",options:["কিছু না","তাকে জবাবদিহি করুন ও মনে করিয়ে দিন","গোপনে রিপোর্ট করুন","আপনারটা দিন"],correct:1,feedback_correct:"চমৎকার! অন্যদের জবাবদিহি করা আপনার দায়িত্ব।",feedback_wrong:"PPE না পরলে অন্যদের জবাবদিহি করতে হবে।"},
+{rule:3,ruleName:"PPE",ruleDesc:"সঠিক PPE পরুন",funFact:"PPE পরীক্ষায় <strong>মাত্র ২ মিনিট</strong> লাগে কিন্তু জীবন বাঁচায়!",funIcon:"🔍",question:"PPE কত ঘন ঘন পরীক্ষা করবেন?",options:["কেনার সময় একবার","নিয়মিত ও ধারাবাহিকভাবে","শুধু আঘাতের পরে","বছরে একবার"],correct:1,feedback_correct:"সঠিক! নিয়মিত পরীক্ষা প্রয়োজন।",feedback_wrong:"PPE পরীক্ষা নিয়মিত ও ধারাবাহিক হতে হবে।"},
+{rule:4,ruleName:"উঁচুতে কাজ",ruleDesc:"পতন থেকে রক্ষা করুন",funFact:"মাত্র <strong>৬ মিটার</strong> থেকে পতন মারাত্মক হতে পারে!",funIcon:"⬆️",question:"পতন সুরক্ষা সরঞ্জাম কখন পরীক্ষা করবেন?",options:["মাসে একবার","প্রতিবার ব্যবহারের আগে","ক্ষতিগ্রস্ত মনে হলে","শুধু কেনার সময়"],correct:1,feedback_correct:"দারুণ! প্রতিবার ব্যবহারের আগে পরীক্ষা করুন।",feedback_wrong:"প্রতিবার ব্যবহারের আগে পরীক্ষা করতে হবে।"},
+{rule:4,ruleName:"উঁচুতে কাজ",ruleDesc:"পতন থেকে রক্ষা করুন",funFact:"<strong>১ কেজি</strong> যন্ত্র ৩০মি থেকে <strong>৮৭ কিমি/ঘণ্টা</strong> গতিতে পড়ে!",funIcon:"🔧",question:"উঁচুতে কাজে যন্ত্রপাতি কেন সুরক্ষিত করবেন?",options:["চুরি রোধে","নিচের শ্রমিকদের উপর পড়া রোধে","সহজে পাওয়ার জন্য","প্রশাসনিক প্রয়োজন"],correct:1,feedback_correct:"সঠিক! নিচের শ্রমিকদের আঘাত রোধে।",feedback_wrong:"নিচের লোকদের উপর পড়া রোধে সুরক্ষিত করতে হবে।"},
+{rule:4,ruleName:"উঁচুতে কাজ",ruleDesc:"পতন থেকে রক্ষা করুন",funFact:"১০০% বাঁধা = <strong>কখনো অরক্ষিত নয়</strong>!",funIcon:"🔗",question:"১০০% বাঁধা মানে কী?",options:["শুধু সরঞ্জাম বাঁধা","সুরক্ষিত এলাকার বাইরে সবসময় অনুমোদিত পয়েন্টে বাঁধা","বিপদ অনুভব করলে বাঁধা","বেল্টে যন্ত্র বাঁধা"],correct:1,feedback_correct:"চমৎকার! অ্যাঙ্কর পয়েন্ট থেকে কখনো বিচ্ছিন্ন হবেন না।",feedback_wrong:"১০০% বাঁধা = সুরক্ষিত এলাকার বাইরে সবসময় সংযুক্ত।"},
+{rule:5,ruleName:"নিরাপত্তা নিয়ন্ত্রণ অতিক্রম",ruleDesc:"অতিক্রমের আগে অনুমতি নিন",funFact:"<strong>৭০%+ বড় দুর্ঘটনা</strong> নিরাপত্তা অতিক্রমে!",funIcon:"🚨",question:"নিরাপত্তা নিয়ন্ত্রণ অক্ষম করার আগে কী লাগবে?",options:["সহকর্মীদের সম্মতি","আনুষ্ঠানিক পূর্ব অনুমতি","জরুরি অবস্থায় কিছু না","পর্যাপ্ত অভিজ্ঞতা"],correct:1,feedback_correct:"সঠিক! আনুষ্ঠানিক অনুমতি সবসময় প্রয়োজন।",feedback_wrong:"আনুষ্ঠানিক অনুমতি সবসময় প্রয়োজন।"},
+{rule:5,ruleName:"নিরাপত্তা নিয়ন্ত্রণ অতিক্রম",ruleDesc:"অতিক্রমের আগে অনুমতি নিন",funFact:"বাধা হলো আপনাকে রক্ষাকারী <strong>প্রতিরক্ষা লাইন</strong>!",funIcon:"🚧",question:"কোন পরিস্থিতিতে পূর্ব অনুমতি লাগবে?",options:["শুধু বাধা অতিক্রম","শুধু পদ্ধতি বিচ্যুতি","সবগুলো: নিয়ন্ত্রণ অক্ষম, পদ্ধতি বিচ্যুতি, বাধা অতিক্রম","কোনোটিই না"],correct:2,feedback_correct:"সঠিক! সবগুলোতেই অনুমতি লাগবে।",feedback_wrong:"সবগুলোতেই পূর্ব অনুমতি প্রয়োজন।"},
+{rule:6,ruleName:"গরম কাজ",ruleDesc:"দাহ্য পদার্থ নিয়ন্ত্রণ করুন",funFact:"ওয়েল্ডিং স্পার্ক <strong>৫,৫০০°C</strong> পর্যন্ত পৌঁছায়!",funIcon:"🔥",question:"গরম কাজের আগে প্রথম পদক্ষেপ?",options:["নিরাপদ মনে হলে শুরু করুন","আগুনের উৎস চিহ্নিত করুন, দাহ্য পদার্থ সরান","শুধু সহকর্মীদের জানান","শুধু চশমা পরুন"],correct:1,feedback_correct:"চমৎকার! আগুনের উৎস চিহ্নিত করুন ও দাহ্য পদার্থ সরান।",feedback_wrong:"আগুনের উৎস চিহ্নিত, নিয়ন্ত্রণ ও দাহ্য পদার্থ সরাতে হবে।"},
+{rule:6,ruleName:"গরম কাজ",ruleDesc:"দাহ্য পদার্থ নিয়ন্ত্রণ করুন",funFact:"গ্যাস পরীক্ষা ছাড়া গরম কাজ = <strong>মাইনফিল্ড</strong>!",funIcon:"🧪",question:"বিপজ্জনক এলাকায় গরম কাজে কী নিশ্চিত করবেন?",options:["শুধু অগ্নিনির্বাপক","গ্যাস পরীক্ষা সম্পন্ন ও ক্রমাগত পর্যবেক্ষণ","মৌখিক সম্মতি","পানি আছে"],correct:1,feedback_correct:"সঠিক! গ্যাস পরীক্ষা ও ক্রমাগত পর্যবেক্ষণ প্রয়োজন।",feedback_wrong:"গ্যাস পরীক্ষা সম্পন্ন ও ক্রমাগত পর্যবেক্ষণ প্রয়োজন।"},
+{rule:7,ruleName:"আবদ্ধ স্থান",ruleDesc:"প্রবেশের আগে অনুমতি নিন",funFact:"অক্সিজেন ঘাটতিতে <strong>১৫ সেকেন্ডে</strong> অজ্ঞান!",funIcon:"😷",question:"কোনটি আবদ্ধ স্থানের শর্ত নয়?",options:["বায়ুমণ্ডল পরীক্ষা","পর্যবেক্ষক উপস্থিত","কাজ দ্রুত হলে অনুমতি ছাড়া প্রবেশ","উদ্ধার পরিকল্পনা"],correct:2,feedback_correct:"সঠিক! অনুমতি ছাড়া কখনোই প্রবেশ নয়।",feedback_wrong:"অনুমতি ছাড়া প্রবেশ সম্পূর্ণ নিষিদ্ধ!"},
+{rule:7,ruleName:"আবদ্ধ স্থান",ruleDesc:"প্রবেশের আগে অনুমতি নিন",funFact:"আবদ্ধ স্থানে <strong>৬০% মৃত্যু</strong> অপ্রশিক্ষিত উদ্ধারকারীর!",funIcon:"🆘",question:"পুরো সময় পর্যবেক্ষক কেন থাকবেন?",options:["সময় রেকর্ড","নিরাপত্তা পর্যবেক্ষণ ও জরুরি সাড়া","সরঞ্জাম আনা","শুধু প্রথা"],correct:1,feedback_correct:"দারুণ! নিরাপত্তা পর্যবেক্ষণ ও জরুরি সাড়া।",feedback_wrong:"পর্যবেক্ষক নিরাপত্তা পর্যবেক্ষণ ও জরুরি সাড়ার জন্য।"},
+{rule:8,ruleName:"বিপদ অঞ্চল",ruleDesc:"বিপদ অঞ্চল থেকে দূরে থাকুন",funFact:"পতনশীল বস্তু <strong>২৫%+</strong> মারাত্মক আঘাত ঘটায়!",funIcon:"⚠️",question:"কোন বিপদ এড়াবেন?",options:["চলমান বস্তু, যানবাহন, চাপ মুক্তি, পতনশীল বস্তু","শুধু শব্দ","শুধু তাপ","দুর্বল আলো"],correct:0,feedback_correct:"সঠিক! এই সব বিপদ এড়ান।",feedback_wrong:"বিপদ: চলমান বস্তু, যানবাহন, চাপ মুক্তি, পতনশীল বস্তু।"},
+{rule:8,ruleName:"বিপদ অঞ্চল",ruleDesc:"বিপদ অঞ্চল থেকে দূরে থাকুন",funFact:"পরীক্ষা ছাড়া চাপযুক্ত পাইপ <strong>হাড় ভাঙার</strong> শক্তিতে ছুটে!",funIcon:"💨",question:"চাপযুক্ত পাইপ সম্পর্কে কী যাচাই করবেন?",options:["নতুন হতে হবে","পরীক্ষা যন্ত্র থাকতে হবে","রঙিন হতে হবে","ছোট হতে হবে"],correct:1,feedback_correct:"চমৎকার! পরীক্ষা যন্ত্র থাকতে হবে।",feedback_wrong:"চাপযুক্ত পাইপে নিরাপত্তা পরীক্ষা যন্ত্র থাকতে হবে।"},
+{rule:9,ruleName:"উত্তোলন",ruleDesc:"উত্তোলন পরিকল্পনা করুন",funFact:"ঝুলন্ত বোঝার নিচে হাঁটা = <strong>শূন্যে গাড়ির</strong> নিচে হাঁটা!",funIcon:"🏗️",question:"উত্তোলনের চূড়ান্ত নিয়ম?",options:["যেকোনো সরঞ্জাম ব্যবহার","কখনোই ঝুলন্ত বোঝার নিচে হাঁটবেন না","হালকা বোঝায় পরিকল্পনা বাদ","নিষিদ্ধ অঞ্চল শর্টকাট"],correct:1,feedback_correct:"সঠিক! কখনোই ঝুলন্ত বোঝার নিচে হাঁটবেন না।",feedback_wrong:"চূড়ান্ত নিয়ম: কখনোই ঝুলন্ত বোঝার নিচে না।"},
+{rule:9,ruleName:"উত্তোলন",ruleDesc:"উত্তোলন পরিকল্পনা করুন",funFact:"প্রশিক্ষণ ছাড়া সরঞ্জাম = দুর্ঘটনা <strong>৩০০%</strong> বৃদ্ধি!",funIcon:"🎓",question:"উত্তোলন সরঞ্জাম ব্যবহারের শর্ত?",options:["সাইটে আছে","আপনি প্রশিক্ষিত","সহকর্মীরা সম্মত","নতুন"],correct:1,feedback_correct:"দারুণ! শুধু প্রশিক্ষিত সরঞ্জাম ব্যবহার করুন।",feedback_wrong:"শুধু প্রশিক্ষণপ্রাপ্ত সরঞ্জাম ব্যবহার করুন।"},
+{rule:10,ruleName:"চালনা",ruleDesc:"নিরাপদ চালনা অনুসরণ করুন",funFact:"চালনায় ফোন = দুর্ঘটনা <strong>৪ গুণ</strong>!",funIcon:"📵",question:"কোনটি নিরাপদ চালনা লঙ্ঘন?",options:["সিটবেল্ট পরা","নিরাপদ দূরত্ব","চালনায় ফোন ব্যবহার","রুট পরিকল্পনা"],correct:2,feedback_correct:"সঠিক! চালনায় ফোন নিষিদ্ধ।",feedback_wrong:"চালনায় ফোন ব্যবহার গুরুতর লঙ্ঘন।"},
+{rule:10,ruleName:"চালনা",ruleDesc:"নিরাপদ চালনা অনুসরণ করুন",funFact:"সিটবেল্ট মৃত্যুর ঝুঁকি <strong>৪৫%</strong> কমায়!",funIcon:"🔗",question:"চালনার সময় কী অবস্থায় থাকবেন?",options:["যাত্রীদের সাথে কথায় মনোযোগ","সজাগ, মনোযোগী ও সম্পূর্ণ প্রস্তুত","ক্লান্ত হলেও চালান","অভিজ্ঞতায় নির্ভর করুন"],correct:1,feedback_correct:"চমৎকার! সজাগ, মনোযোগী ও প্রস্তুত থাকুন।",feedback_wrong:"সবসময় সজাগ, মনোযোগী ও সম্পূর্ণ প্রস্তুত থাকতে হবে।"},
+{rule:"✋",ruleName:"অনিরাপদ কাজ বন্ধ",ruleDesc:"অনিরাপদ কাজ বন্ধের ক্ষমতা",funFact:"প্রতিটি কর্মী ও ঠিকাদারের অনিরাপদ কাজ বন্ধের <strong>সম্পূর্ণ ক্ষমতা</strong> আছে!",funIcon:"✋",question:"অনিরাপদ কাজ বন্ধের ক্ষমতা কার আছে?",options:["শুধু ম্যানেজার","শুধু নিরাপত্তা কর্মকর্তা","সকল কর্মী ও ঠিকাদার","শুধু সরকারি সংস্থা"],correct:2,feedback_correct:"সঠিক! সকল কর্মী ও ঠিকাদার অনিরাপদ কাজ বন্ধ করতে পারেন।",feedback_wrong:"সকল কর্মী ও ঠিকাদারের অনিরাপদ কাজ বন্ধের সম্পূর্ণ ক্ষমতা আছে।"},
+{rule:"✋",ruleName:"অনিরাপদ কাজ বন্ধ",ruleDesc:"অনিরাপদ কাজ বন্ধের ক্ষমতা",funFact:"অনিরাপদ কাজ বন্ধ আপনার সহকর্মীদের <strong>জীবন বাঁচাতে</strong> পারে!",funIcon:"🛑",question:"কোন পরিস্থিতিতে কাজ বন্ধ করবেন?",options:["শুধু PPE না পরলে","শুধু শক্তি বিচ্ছিন্ন না হলে","সবগুলো: শক্তি বিচ্ছিন্ন নয়, PPE নেই, নিরাপত্তা পদ্ধতি মানা হয়নি","কাজ কখনো বন্ধ করবেন না"],correct:2,feedback_correct:"সঠিক! এই সব পরিস্থিতিতে কাজ বন্ধ করুন।",feedback_wrong:"কাজ বন্ধ করুন: শক্তি বিচ্ছিন্ন নয়, PPE নেই, নিরাপত্তা পদ্ধতি মানা হয়নি।"}
+];
+
+function getRulesData() { return {en:rulesDataEN,bn:rulesDataBN,ur:rulesDataUR,hi:rulesDataHI}[lang] || rulesData; }
+function getQuizData() { return {en:quizDataEN,bn:quizDataBN,ur:quizDataUR,hi:quizDataHI}[lang] || quizData; }
+
+function L() { return (lang==='ar'||lang==='ur') ? ['الف','ب','ج','د'] : lang==='bn' ? ['ক','খ','গ','ঘ'] : lang==='hi' ? ['अ','ब','स','द'] : ['A','B','C','D']; }
+
+// Hindi Rules Data (colloquial/simple Hindi)
+const rulesDataHI = [
+{number:1,name:"बिजली को अलग करो",subtitle:"काम शुरू करने से पहले बिजली बंद और चेक करो",icon:"🔌",funFact:"बिजली के झटके से हर साल <strong>160+ लोग मरते हैं</strong>। LOTO से <strong>1,20,000+ मज़दूरों</strong> की जान बची!",funIcon:"⚡",details:[{icon:"🔍",text:"मशीन से जुड़ी सारी बिजली के सोर्स पहचानो"},{icon:"🔒",text:"सारी बिजली अलग करो, ताला और टैग लगाओ"},{icon:"⚡",text:"चेक करो कि बची हुई बिजली तो नहीं है"},{icon:"🧪",text:"मंजूर किए गए उपकरण से बची बिजली का टेस्ट करो"},{icon:"🛡️",text:"जब तक सब सोर्स सेफ न हों, काम शुरू मत करो"}]},
+{number:2,name:"काम का परमिट",subtitle:"ज़रूरत हो तो सही परमिट लेकर काम करो",icon:"📋",funFact:"परमिट से गंभीर हादसे <strong>40%</strong> कम होते हैं!",funIcon:"📋",details:[{icon:"✅",text:"पता करो कि परमिट ज़रूरी है या नहीं"},{icon:"👷",text:"काम के लिए अधिकृत और योग्य होना ज़रूरी"},{icon:"📖",text:"परमिट को पूरी तरह समझो"},{icon:"🔐",text:"यकीन करो कि खतरे कंट्रोल में हैं"},{icon:"⏸️",text:"हालात बदलें तो रुको और दोबारा चेक करो"},{icon:"📝",text:"बंद करने सहित सारी शर्तें मानो"}]},
+{number:3,name:"सेफ्टी का सामान (PPE)",subtitle:"काम के हिसाब से सही PPE पहनो",icon:"🦺",funFact:"PPE से चोटें <strong>60%</strong> कम होती हैं! हेलमेट <strong>450 किलो</strong> ताकत सह लेता है।",funIcon:"🛡️",details:[{icon:"📋",text:"परमिट के मुताबिक एक्स्ट्रा PPE पहनो"},{icon:"📌",text:"साइनबोर्ड और निर्देश के मुताबिक PPE पहनो"},{icon:"🔍",text:"रेगुलर अपने PPE की जांच करो"},{icon:"👥",text:"साथी PPE न पहने तो उसे टोको"}]},
+{number:4,name:"ऊंचाई पर काम",subtitle:"ऊंचाई पर काम करते वक्त गिरने से बचो",icon:"🏗️",funFact:"गिरना कंस्ट्रक्शन में <strong>मौत की नंबर 1 वजह</strong> है!",funIcon:"⬆️",details:[{icon:"🔍",text:"हर बार इस्तेमाल से पहले गिरने से बचाव का सामान चेक करो"},{icon:"🔧",text:"औज़ार और सामान गिरने से रोकने के लिए बांधो"},{icon:"🔗",text:"सुरक्षित ज़ोन से बाहर 100% बंधे रहो"}]},
+{number:5,name:"सेफ्टी कंट्रोल तोड़ना",subtitle:"सेफ्टी कंट्रोल बंद करने से पहले इजाज़त लो",icon:"🚧",funFact:"<strong>70%+ बड़े हादसे</strong> सेफ्टी तोड़ने से होते हैं!",funIcon:"🚨",details:[{icon:"📖",text:"अपने काम के लिए सेफ्टी सामान समझो और इस्तेमाल करो"},{icon:"🚫",text:"सेफ्टी कंट्रोल बंद करने से पहले इजाज़त लो"},{icon:"↩️",text:"तरीके से हटने से पहले इजाज़त लो"},{icon:"🔶",text:"बैरियर पार करने से पहले इजाज़त लो"}]},
+{number:6,name:"गर्म काम",subtitle:"जलने वाली चीज़ें और आग के सोर्स कंट्रोल करो",icon:"🔥",funFact:"वेल्डिंग की चिंगारी <strong>5,500°C</strong> तक पहुंचती है!",funIcon:"🔥",details:[{icon:"🎯",text:"आग के सोर्स पहचानो और कंट्रोल करो"},{icon:"🧹",text:"जलने वाली चीज़ें हटाओ या अलग करो"},{icon:"📝",text:"सही इजाज़त लो"},{icon:"🧪",text:"खतरनाक जगह में गैस टेस्ट करो"},{icon:"📊",text:"लगातार गैस की निगरानी करो"}]},
+{number:7,name:"बंद जगह में घुसना",subtitle:"बंद जगह में घुसने से पहले इजाज़त लो",icon:"🚪",funFact:"ऑक्सीजन कम हो तो <strong>15 सेकंड</strong> से कम में बेहोश हो सकते हो!",funIcon:"⚠️",details:[{icon:"🔌",text:"बिजली के सोर्स अलग हैं यकीन करो"},{icon:"🌬️",text:"हवा का टेस्ट हो चुका है यकीन करो"},{icon:"😷",text:"सांस का उपकरण चेक करो"},{icon:"👀",text:"पूरे वक्त निगरानी करने वाला मौजूद हो"},{icon:"🆘",text:"रेस्क्यू प्लान तैयार है यकीन करो"},{icon:"📋",text:"घुसने का परमिट लो"}]},
+{number:8,name:"खतरे के ज़ोन में काम",subtitle:"खुद को और दूसरों को खतरे के ज़ोन से दूर रखो",icon:"⚠️",funFact:"गिरती चीज़ें <strong>25%+</strong> जानलेवा चोटों की वजह हैं!",funIcon:"🚨",details:[{icon:"📍",text:"हिलती चीज़ों, गाड़ियों, प्रेशर रिलीज़ और गिरती चीज़ों से बचकर रहो"},{icon:"🚧",text:"बैरियर और मनाही ज़ोन बनाओ और मानो"},{icon:"🔩",text:"ढीली चीज़ों को सुरक्षित करो"},{icon:"🔍",text:"प्रेशर वाली पाइप में चेकिंग डिवाइस है यकीन करो"}]},
+{number:9,name:"उठाने का काम",subtitle:"उठाने की प्लानिंग करो और एरिया कंट्रोल करो",icon:"🏗️",funFact:"लटके बोझ के नीचे चलना = <strong>हवा में लटकी गाड़ी</strong> के नीचे चलना!",funIcon:"🏋️",details:[{icon:"🔍",text:"सामान और बोझ की जांच हुई है यकीन करो"},{icon:"🎓",text:"सिर्फ वही सामान इस्तेमाल करो जिसकी ट्रेनिंग ली हो"},{icon:"📋",text:"उठाने का प्लान और रिस्क असेसमेंट बनाओ"},{icon:"🚧",text:"बैरियर लगाओ और मानो"},{icon:"🚫",text:"कभी भी लटके बोझ के नीचे मत चलो"}]},
+{number:10,name:"गाड़ी या सामान चलाना",subtitle:"सेफ ड्राइविंग के नियम मानो",icon:"🚗",funFact:"ड्राइविंग में फोन = हादसे का खतरा <strong>4 गुना</strong>!",funIcon:"🚨",details:[{icon:"🔗",text:"हमेशा सीटबेल्ट लगाओ"},{icon:"⏱️",text:"स्पीड लिमिट मत तोड़ो"},{icon:"📵",text:"ड्राइविंग में फोन मत इस्तेमाल करो"},{icon:"👁️",text:"चौकन्ना, होशियार और पूरी तरह तैयार रहो"},{icon:"↔️",text:"सेफ दूरी बनाए रखो"}]},
+{number:"✋",name:"असुरक्षित काम रोको",subtitle:"असुरक्षित काम रोकने का अधिकार इस्तेमाल करके मैं अपनी और दूसरों की जान बचाता हूं",icon:"🛑",isSpecial:true,funFact:"सभी कर्मचारियों और ठेकेदारों को असुरक्षित काम रोकने का <strong>पूरा अधिकार</strong> है!",funIcon:"✋",details:[{icon:"⚡",text:"बिजली अलग न हो तो काम रोको"},{icon:"🦺",text:"सही PPE न पहनी हो तो काम रोको"},{icon:"📋",text:"सेफ्टी के तरीके सही से न अपनाए जाएं तो काम रोको"},{icon:"👥",text:"मैं अपनी और दूसरों की सेफ्टी का ज़िम्मेदार हूं"}]}
+];
+
+// Hindi Quiz Data
+const quizDataHI = [
+{rule:1,ruleName:"बिजली अलग करो",ruleDesc:"काम से पहले बिजली बंद और चेक करो",funFact:"जमा बिजली <strong>घंटों खतरनाक</strong> रह सकती है!",funIcon:"⚡",question:"बिजली के सामान पर काम से पहले क्या करना है?",options:["फौरन शुरू करो","सारे बिजली सोर्स पहचानो, अलग करो, ताला-टैग लगाओ","बस साथियों को बता दो","बस दस्ताने पहन लो"],correct:1,feedback_correct:"शाबाश! पहचानो, अलग करो, ताला-टैग लगाओ।",feedback_wrong:"सही: सारे सोर्स पहचानो, अलग करो, ताला-टैग लगाओ।"},
+{rule:1,ruleName:"बिजली अलग करो",ruleDesc:"काम से पहले बिजली बंद और चेक करो",funFact:"LOTO से <strong>1,20,000+</strong> मज़दूरों की जान बची!",funIcon:"🔒",question:"ताला और टैग का मकसद क्या है?",options:["सामान सजाना","काम के दौरान बिजली दोबारा चालू होने से रोकना","मालिकाना बताना","शुरू का टाइम लिखना"],correct:1,feedback_correct:"सही! ताला-टैग गलती से रीस्टार्ट रोकते हैं।",feedback_wrong:"ताला-टैग काम के दौरान बिजली दोबारा चालू होने से रोकते हैं।"},
+{rule:2,ruleName:"काम का परमिट",ruleDesc:"सही परमिट लेकर काम करो",funFact:"परमिट से हादसे <strong>40%</strong> कम!",funIcon:"📋",question:"कब रुकना और दोबारा चेक करना चाहिए?",options:["बस थकान में","परमिट की शर्तें बदल जाएं तो","ब्रेक के टाइम","कभी नहीं रुकना"],correct:1,feedback_correct:"सही! हालात बदलें तो फौरन रुको।",feedback_wrong:"हालात बदलें तो फौरन रुको और दोबारा चेक करो।"},
+{rule:2,ruleName:"काम का परमिट",ruleDesc:"सही परमिट लेकर काम करो",funFact:"हर मज़दूर को <strong>अधिकृत और योग्य</strong> होना ज़रूरी।",funIcon:"✅",question:"कौन सी परमिट की शर्त नहीं है?",options:["परमिट ज़रूरी है यकीन करना","परमिट समझना","खतरे कंट्रोल किए बिना काम शुरू करना","सारी शर्तें मानना"],correct:2,feedback_correct:"बिल्कुल! खतरे कंट्रोल किए बिना काम शुरू नहीं कर सकते।",feedback_wrong:"खतरे कंट्रोल किए बिना काम शुरू करना सेफ्टी तोड़ना है।"},
+{rule:3,ruleName:"PPE",ruleDesc:"सही PPE पहनो",funFact:"हेलमेट <strong>450 किलो</strong> ताकत सहता है!",funIcon:"🦺",question:"एक्स्ट्रा PPE कौन तय करता है?",options:["मज़दूर की मर्ज़ी","परमिट या निर्देश","स्टॉक में है कि नहीं","साथियों का फैसला"],correct:1,feedback_correct:"बढ़िया! परमिट और निर्देश PPE तय करते हैं।",feedback_wrong:"एक्स्ट्रा PPE परमिट या निर्देश से तय होता है।"},
+{rule:3,ruleName:"PPE",ruleDesc:"सही PPE पहनो",funFact:"PPE से चोटें <strong>60%</strong> कम!",funIcon:"🛡️",question:"साथी PPE न पहने तो क्या करोगे?",options:["कुछ नहीं","उसे टोको और याद दिलाओ","चुपके से रिपोर्ट करो","अपना PPE दे दो"],correct:1,feedback_correct:"शाबाश! दूसरों को टोकना तुम्हारी ज़िम्मेदारी है।",feedback_wrong:"PPE न पहने तो दूसरों को टोकना ज़रूरी है।"},
+{rule:3,ruleName:"PPE",ruleDesc:"सही PPE पहनो",funFact:"PPE चेक करने में <strong>बस 2 मिनट</strong> लगते हैं!",funIcon:"🔍",question:"PPE कितनी बार चेक करना चाहिए?",options:["खरीदते वक्त एक बार","रेगुलर","बस चोट के बाद","साल में एक बार"],correct:1,feedback_correct:"सही! रेगुलर चेक करना ज़रूरी है।",feedback_wrong:"PPE की जांच रेगुलर होनी चाहिए।"},
+{rule:4,ruleName:"ऊंचाई पर काम",ruleDesc:"गिरने से बचो",funFact:"बस <strong>6 मीटर</strong> से गिरना जानलेवा हो सकता है!",funIcon:"⬆️",question:"गिरने से बचाव का सामान कब चेक करो?",options:["महीने में एक बार","हर इस्तेमाल से पहले","टूटा लगे तो","बस खरीदते वक्त"],correct:1,feedback_correct:"बढ़िया! हर बार इस्तेमाल से पहले चेक करो।",feedback_wrong:"हर इस्तेमाल से पहले चेक करना ज़रूरी।"},
+{rule:4,ruleName:"ऊंचाई पर काम",ruleDesc:"गिरने से बचो",funFact:"<strong>1 किलो</strong> औज़ार 30 मीटर से <strong>87 किमी/घंटा</strong> रफ्तार से गिरता है!",funIcon:"🔧",question:"ऊंचाई पर औज़ार क्यों बांधो?",options:["चोरी से बचाओ","नीचे मज़दूरों पर गिरने से रोको","आसान पहुंच","एडमिन ज़रूरत"],correct:1,feedback_correct:"सही! नीचे मज़दूरों पर गिरने से रोकने के लिए।",feedback_wrong:"नीचे लोगों पर गिरने से रोकने के लिए बांधो।"},
+{rule:4,ruleName:"ऊंचाई पर काम",ruleDesc:"गिरने से बचो",funFact:"100% बंधन = <strong>कभी असुरक्षित नहीं</strong>!",funIcon:"🔗",question:"100% बंधन का मतलब?",options:["बस सामान बांधना","सुरक्षित ज़ोन से बाहर हमेशा मंजूर पॉइंट से बंधे रहना","खतरा लगे तो बांधना","बेल्ट से औज़ार बांधना"],correct:1,feedback_correct:"शाबाश! एंकर पॉइंट से कभी अलग मत होओ।",feedback_wrong:"100% बंधन = सुरक्षित ज़ोन से बाहर हमेशा जुड़े रहना।"},
+{rule:5,ruleName:"सेफ्टी कंट्रोल तोड़ना",ruleDesc:"पहले इजाज़त लो",funFact:"<strong>70%+ बड़े हादसे</strong> सेफ्टी तोड़ने से!",funIcon:"🚨",question:"सेफ्टी कंट्रोल बंद करने से पहले क्या ज़रूरी?",options:["साथियों की हां","बाकायदा पहले से इजाज़त","इमरजेंसी में कुछ नहीं","काफी तजुर्बा"],correct:1,feedback_correct:"सही! बाकायदा इजाज़त हमेशा ज़रूरी।",feedback_wrong:"बाकायदा इजाज़त हमेशा ज़रूरी है।"},
+{rule:5,ruleName:"सेफ्टी कंट्रोल तोड़ना",ruleDesc:"पहले इजाज़त लो",funFact:"बैरियर तुम्हारी <strong>सुरक्षा की लाइनें</strong> हैं!",funIcon:"🚧",question:"किन हालात में पहले इजाज़त चाहिए?",options:["बस बैरियर पार","बस तरीके से हटना","सब: कंट्रोल बंद, तरीके से हटना, बैरियर पार","कोई नहीं"],correct:2,feedback_correct:"बिल्कुल! सब में इजाज़त चाहिए।",feedback_wrong:"सब में पहले इजाज़त ज़रूरी।"},
+{rule:6,ruleName:"गर्म काम",ruleDesc:"जलने वाली चीज़ें कंट्रोल करो",funFact:"वेल्डिंग चिंगारी <strong>5,500°C</strong> तक!",funIcon:"🔥",question:"गर्म काम से पहले पहला कदम?",options:["सेफ लगे तो शुरू","आग के सोर्स पहचानो, जलने वाली चीज़ें हटाओ","बस साथियों को बता दो","बस चश्मा पहनो"],correct:1,feedback_correct:"शाबाश! आग के सोर्स पहचानो और जलने वाली चीज़ें हटाओ।",feedback_wrong:"आग सोर्स पहचानो, कंट्रोल करो, जलने वाली चीज़ें हटाओ।"},
+{rule:6,ruleName:"गर्म काम",ruleDesc:"जलने वाली चीज़ें कंट्रोल करो",funFact:"गैस टेस्ट बिना गर्म काम = <strong>बारूदी सुरंग</strong>!",funIcon:"🧪",question:"खतरनाक जगह में गर्म काम में क्या ज़रूरी?",options:["बस आग बुझाने वाला","गैस टेस्ट पूरा और लगातार निगरानी","मौखिक हां","पानी हो"],correct:1,feedback_correct:"सही! गैस टेस्ट और लगातार निगरानी ज़रूरी।",feedback_wrong:"गैस टेस्ट पूरा और लगातार निगरानी ज़रूरी।"},
+{rule:7,ruleName:"बंद जगह",ruleDesc:"घुसने से पहले इजाज़त",funFact:"ऑक्सीजन कम हो तो <strong>15 सेकंड</strong> में बेहोशी!",funIcon:"😷",question:"बंद जगह की शर्त नहीं?",options:["हवा का टेस्ट","निगरान मौजूद","जल्दी हो तो बिना परमिट घुसना","रेस्क्यू प्लान"],correct:2,feedback_correct:"बिल्कुल! बिना परमिट कभी नहीं घुसना।",feedback_wrong:"बिना परमिट घुसना बिल्कुल मना!"},
+{rule:7,ruleName:"बंद जगह",ruleDesc:"घुसने से पहले इजाज़त",funFact:"बंद जगह में <strong>60% मौतें</strong> बिना ट्रेनिंग बचाने वालों की!",funIcon:"🆘",question:"पूरे वक्त निगरान क्यों?",options:["टाइम लिखने","सेफ्टी देखने और इमरजेंसी में एक्शन लेने","सामान लाने","बस रिवाज"],correct:1,feedback_correct:"बढ़िया! सेफ्टी और इमरजेंसी में फौरी एक्शन।",feedback_wrong:"निगरान सेफ्टी देखने और इमरजेंसी में एक्शन के लिए।"},
+{rule:8,ruleName:"खतरे का ज़ोन",ruleDesc:"खतरे के ज़ोन से दूर रहो",funFact:"गिरती चीज़ें <strong>25%+</strong> जानलेवा चोटों की वजह!",funIcon:"⚠️",question:"किन खतरों से बचो?",options:["हिलती चीज़ें, गाड़ियां, प्रेशर रिलीज़, गिरती चीज़ें","बस शोर","बस गर्मी","कम रोशनी"],correct:0,feedback_correct:"सही! इन सब खतरों से बचो।",feedback_wrong:"खतरे: हिलती चीज़ें, गाड़ियां, प्रेशर, गिरती चीज़ें।"},
+{rule:8,ruleName:"खतरे का ज़ोन",ruleDesc:"खतरे के ज़ोन से दूर रहो",funFact:"बिना चेक प्रेशर पाइप <strong>हड्डी तोड़ने</strong> वाली ताकत से!",funIcon:"💨",question:"प्रेशर पाइप में क्या चेक करो?",options:["नई हो","चेकिंग डिवाइस हो","रंगीन हो","छोटी हो"],correct:1,feedback_correct:"शाबाश! चेकिंग डिवाइस होनी चाहिए।",feedback_wrong:"प्रेशर पाइप में सेफ्टी चेकिंग डिवाइस होनी चाहिए।"},
+{rule:9,ruleName:"उठाने का काम",ruleDesc:"उठाने की प्लानिंग करो",funFact:"लटके बोझ के नीचे = <strong>हवा में गाड़ी</strong> के नीचे!",funIcon:"🏗️",question:"उठाने का पक्का नियम?",options:["कोई भी सामान इस्तेमाल","कभी लटके बोझ के नीचे मत चलो","हल्के बोझ में प्लान छोड़ो","मनाही ज़ोन शॉर्टकट"],correct:1,feedback_correct:"सही! कभी लटके बोझ के नीचे मत चलो।",feedback_wrong:"पक्का नियम: कभी लटके बोझ के नीचे नहीं।"},
+{rule:9,ruleName:"उठाने का काम",ruleDesc:"उठाने की प्लानिंग करो",funFact:"बिना ट्रेनिंग सामान = हादसे <strong>300%</strong> ज़्यादा!",funIcon:"🎓",question:"उठाने का सामान इस्तेमाल करने की शर्त?",options:["साइट पर मौजूद हो","ट्रेनिंग ली हो","साथी राज़ी हों","नया हो"],correct:1,feedback_correct:"बढ़िया! सिर्फ ट्रेनिंग वाला सामान इस्तेमाल करो।",feedback_wrong:"सिर्फ वो सामान जिसकी ट्रेनिंग ली हो।"},
+{rule:10,ruleName:"ड्राइविंग",ruleDesc:"सेफ ड्राइविंग मानो",funFact:"ड्राइविंग में फोन = खतरा <strong>4 गुना</strong>!",funIcon:"📵",question:"सेफ ड्राइविंग तोड़ना?",options:["सीटबेल्ट लगाना","सेफ दूरी","ड्राइविंग में फोन","रास्ते की प्लानिंग"],correct:2,feedback_correct:"सही! ड्राइविंग में फोन मना है।",feedback_wrong:"ड्राइविंग में फोन गंभीर उल्लंघन है।"},
+{rule:10,ruleName:"ड्राइविंग",ruleDesc:"सेफ ड्राइविंग मानो",funFact:"सीटबेल्ट से मौत का खतरा <strong>45%</strong> कम!",funIcon:"🔗",question:"ड्राइविंग में कैसे रहना ज़रूरी?",options:["पैसेंजर से बात पर ध्यान","चौकन्ना, होशियार और पूरा तैयार","थके भी चलाओ","तजुर्बे पर भरोसा"],correct:1,feedback_correct:"शाबाश! चौकन्ना, होशियार और तैयार रहो।",feedback_wrong:"हमेशा चौकन्ना, होशियार और पूरा तैयार रहना ज़रूरी।"},
+{rule:"✋",ruleName:"असुरक्षित काम रोको",ruleDesc:"असुरक्षित काम रोकने का अधिकार",funFact:"हर कर्मचारी और ठेकेदार को असुरक्षित काम रोकने का <strong>पूरा अधिकार</strong>!",funIcon:"✋",question:"असुरक्षित काम रोकने का अधिकार किसे है?",options:["बस मैनेजर","बस सेफ्टी ऑफिसर","सभी कर्मचारी और ठेकेदार","बस सरकारी एजेंसी"],correct:2,feedback_correct:"बिल्कुल! सभी कर्मचारी और ठेकेदार रोक सकते हैं।",feedback_wrong:"सभी कर्मचारी और ठेकेदारों को पूरा अधिकार है।"},
+{rule:"✋",ruleName:"असुरक्षित काम रोको",ruleDesc:"असुरक्षित काम रोकने का अधिकार",funFact:"असुरक्षित काम रोकना साथियों की <strong>जान बचा</strong> सकता है!",funIcon:"🛑",question:"किन हालात में काम रोकना चाहिए?",options:["बस PPE न पहनी हो","बस बिजली अलग न हो","सब: बिजली अलग नहीं, PPE नहीं, सेफ्टी तरीका नहीं","कभी नहीं रोकना"],correct:2,feedback_correct:"सही! इन सब हालात में काम रोको।",feedback_wrong:"काम रोको: बिजली अलग नहीं, PPE नहीं, सेफ्टी तरीका नहीं।"}
+];
+
+// Urdu Rules Data
+const rulesDataUR = [
+{number:1,name:"توانائی کی تنہائی",subtitle:"کام شروع کرنے سے پہلے تنہائی اور صفر توانائی کی تصدیق کریں",icon:"🔌",funFact:"بجلی کے جھٹکے سالانہ <strong>160+ اموات</strong> کا سبب بنتے ہیں۔ LOTO نے <strong>1,20,000+ مزدوروں</strong> کی جان بچائی!",funIcon:"⚡",details:[{icon:"🔍",text:"آلات سے جڑے تمام توانائی کے ذرائع کی نشاندہی کریں"},{icon:"🔒",text:"تمام توانائی کے ذرائع الگ کریں، تالے اور ٹیگ لگائیں"},{icon:"⚡",text:"بقایا یا ذخیرہ شدہ توانائی نہیں ہے اس کی تصدیق کریں"},{icon:"🧪",text:"منظور شدہ آلات سے ذخیرہ شدہ توانائی کا ٹیسٹ کریں"},{icon:"🛡️",text:"جب تک تمام ذرائع محفوظ نہ ہوں کام شروع نہ کریں"}]},
+{number:2,name:"کام کا اجازت نامہ",subtitle:"ضرورت ہو تو درست اجازت نامے کے ساتھ کام کریں",icon:"📋",funFact:"اجازت نامے سنگین واقعات کو <strong>40%</strong> تک کم کرتے ہیں!",funIcon:"📋",details:[{icon:"✅",text:"تصدیق کریں کہ اجازت نامہ ضروری ہے"},{icon:"👷",text:"کام کے لیے مجاز اور اہل ہوں"},{icon:"📖",text:"اجازت نامہ مکمل طور پر سمجھیں"},{icon:"🔐",text:"خطرات پر قابو پانے کی تصدیق کریں"},{icon:"⏸️",text:"حالات بدلیں تو رکیں اور دوبارہ جائزہ لیں"},{icon:"📝",text:"بند کرنے سمیت تمام شرائط پر عمل کریں"}]},
+{number:3,name:"ذاتی حفاظتی سامان",subtitle:"کام کے لیے صحیح PPE پہنیں اور استعمال کریں",icon:"🦺",funFact:"PPE زخموں کو <strong>60%</strong> تک کم کرتا ہے! ہیلمٹ <strong>450 کلو</strong> طاقت جذب کرتا ہے۔",funIcon:"🛡️",details:[{icon:"📋",text:"اجازت نامے کے مطابق اضافی PPE استعمال کریں"},{icon:"📌",text:"نشانیوں اور ہدایات کے مطابق PPE استعمال کریں"},{icon:"🔍",text:"باقاعدگی سے اپنے PPE کا معائنہ کریں"},{icon:"👥",text:"دوسروں کو PPE نہ پہننے پر جوابدہ ٹھہرائیں"}]},
+{number:4,name:"بلندی پر کام",subtitle:"بلندی پر کام کرتے وقت گرنے سے خود کو بچائیں",icon:"🏗️",funFact:"گرنا تعمیرات میں <strong>موت کی نمبر 1 وجہ</strong> ہے!",funIcon:"⬆️",details:[{icon:"🔍",text:"ہر استعمال سے پہلے گرنے سے بچاؤ کا سامان چیک کریں"},{icon:"🔧",text:"اوزار اور سامان گرنے سے روکنے کے لیے محفوظ کریں"},{icon:"🔗",text:"محفوظ علاقے سے باہر منظور شدہ پوائنٹس پر 100% بندھے رہیں"}]},
+{number:5,name:"حفاظتی کنٹرول کی خلاف ورزی",subtitle:"حفاظتی کنٹرول غیر فعال کرنے سے پہلے اجازت لیں",icon:"🚧",funFact:"<strong>70%+ بڑے حادثات</strong> حفاظتی کنٹرول کی خلاف ورزی سے!",funIcon:"🚨",details:[{icon:"📖",text:"اپنے کام کے لیے حفاظتی سامان سمجھیں اور استعمال کریں"},{icon:"🚫",text:"حفاظتی کنٹرول غیر فعال کرنے سے پہلے اجازت لیں"},{icon:"↩️",text:"طریقہ کار سے ہٹنے سے پہلے اجازت لیں"},{icon:"🔶",text:"رکاوٹیں عبور کرنے سے پہلے اجازت لیں"}]},
+{number:6,name:"گرم کام",subtitle:"آتش گیر مواد اور آگ کے ذرائع پر قابو رکھیں",icon:"🔥",funFact:"ویلڈنگ کی چنگاری <strong>5,500°C</strong> تک پہنچتی ہے!",funIcon:"🔥",details:[{icon:"🎯",text:"آگ کے ذرائع کی نشاندہی اور قابو کریں"},{icon:"🧹",text:"آتش گیر مواد ہٹائیں یا الگ کریں"},{icon:"📝",text:"مناسب اجازت حاصل کریں"},{icon:"🧪",text:"خطرناک علاقوں میں گیس ٹیسٹنگ مکمل کریں"},{icon:"📊",text:"مسلسل گیس کی نگرانی کریں"}]},
+{number:7,name:"محدود جگہ میں داخلہ",subtitle:"داخل ہونے سے پہلے اجازت لیں",icon:"🚪",funFact:"آکسیجن کی کمی <strong>15 سیکنڈ سے کم</strong> میں بے ہوش کر سکتی ہے!",funIcon:"⚠️",details:[{icon:"🔌",text:"توانائی کے ذرائع الگ ہیں اس کی تصدیق کریں"},{icon:"🌬️",text:"فضا کا ٹیسٹ اور نگرانی ہو رہی ہے یقینی بنائیں"},{icon:"😷",text:"سانس کا آلہ چیک کریں"},{icon:"👀",text:"پوری مدت نگران موجود ہو یقینی بنائیں"},{icon:"🆘",text:"ریسکیو پلان تیار ہے تصدیق کریں"},{icon:"📋",text:"داخلے کا اجازت نامہ حاصل کریں"}]},
+{number:8,name:"خطرے کے علاقے میں کام",subtitle:"خود کو اور دوسروں کو خطرے کے علاقے سے دور رکھیں",icon:"⚠️",funFact:"گرتی چیزیں <strong>25%+</strong> مہلک زخموں کا سبب!",funIcon:"🚨",details:[{icon:"📍",text:"حرکت کرتی چیزوں، گاڑیوں، دباؤ کے اخراج اور گرتی چیزوں سے بچ کر رہیں"},{icon:"🚧",text:"رکاوٹیں اور ممنوعہ علاقے بنائیں اور ان کی پابندی کریں"},{icon:"🔩",text:"غیر محفوظ چیزوں کو محفوظ کریں"},{icon:"🔍",text:"دباؤ والی نلیوں میں معائنہ آلات ہیں یقینی بنائیں"}]},
+{number:9,name:"اٹھانے کے عمل",subtitle:"اٹھانے کی منصوبہ بندی کریں اور علاقے کو کنٹرول کریں",icon:"🏗️",funFact:"لٹکے ہوئے بوجھ کے نیچے چلنا = <strong>ہوا میں لٹکی گاڑی</strong> کے نیچے چلنا!",funIcon:"🏋️",details:[{icon:"🔍",text:"سامان اور بوجھ کا معائنہ ہوا ہے تصدیق کریں"},{icon:"🎓",text:"صرف وہ سامان استعمال کریں جس کی تربیت ملی ہو"},{icon:"📋",text:"اٹھانے کا منصوبہ اور خطرے کا جائزہ بنائیں"},{icon:"🚧",text:"رکاوٹیں قائم کریں اور ان کا احترام کریں"},{icon:"🚫",text:"کبھی بھی لٹکے ہوئے بوجھ کے نیچے نہ چلیں"}]},
+{number:10,name:"گاڑیاں یا سامان چلانا",subtitle:"محفوظ ڈرائیونگ کی ہدایات پر عمل کریں",icon:"🚗",funFact:"ڈرائیونگ میں فون استعمال سے حادثے کا خطرہ <strong>4 گنا</strong> بڑھ جاتا ہے!",funIcon:"🚨",details:[{icon:"🔗",text:"ہمیشہ سیٹ بیلٹ لگائیں"},{icon:"⏱️",text:"رفتار کی حد سے تجاوز نہ کریں"},{icon:"📵",text:"ڈرائیونگ کے دوران فون استعمال نہ کریں"},{icon:"👁️",text:"چوکنا، ہوشیار اور مکمل طور پر تیار رہیں"},{icon:"↔️",text:"محفوظ فاصلہ برقرار رکھیں"}]},
+{number:"✋",name:"غیر محفوظ کام روکیں",subtitle:"غیر محفوظ کام روکنے کا اختیار استعمال کرکے میں اپنی اور دوسروں کی جان بچاتا ہوں",icon:"🛑",isSpecial:true,funFact:"تمام ملازمین اور ٹھیکیداروں کو غیر محفوظ کام روکنے کا <strong>مکمل اختیار</strong> ہے!",funIcon:"✋",details:[{icon:"⚡",text:"اگر توانائی الگ نہ ہو تو کام روکیں"},{icon:"🦺",text:"مناسب PPE نہ پہنی ہو تو کام روکیں"},{icon:"📋",text:"حفاظتی طریقہ کار صحیح طور پر نہ اپنایا جائے تو کام روکیں"},{icon:"👥",text:"میں اپنی اور دوسروں کی حفاظت کا ذمہ دار ہوں"}]}
+];
+
+// Urdu Quiz Data
+const quizDataUR = [
+{rule:1,ruleName:"توانائی کی تنہائی",ruleDesc:"کام سے پہلے صفر توانائی کی تصدیق",funFact:"ذخیرہ شدہ توانائی <strong>گھنٹوں خطرناک</strong> رہ سکتی ہے!",funIcon:"⚡",question:"بجلی کے آلات پر کام سے پہلے کیا کریں؟",options:["فوراً شروع کریں","تمام توانائی کے ذرائع کی نشاندہی، تنہائی، تالے اور ٹیگ","صرف ساتھیوں کو بتائیں","صرف دستانے پہنیں"],correct:1,feedback_correct:"شاباش! نشاندہی، تنہائی، تالے اور ٹیگ لگائیں۔",feedback_wrong:"صحیح: تمام توانائی کے ذرائع کی نشاندہی اور تنہائی، تالے اور ٹیگ۔"},
+{rule:1,ruleName:"توانائی کی تنہائی",ruleDesc:"کام سے پہلے صفر توانائی کی تصدیق",funFact:"LOTO نے <strong>1,20,000+</strong> مزدوروں کی جان بچائی!",funIcon:"🔒",question:"تالوں اور ٹیگز کا مقصد کیا ہے؟",options:["سامان کی سجاوٹ","کام کے دوران توانائی دوبارہ چالو ہونے سے روکنا","ملکیت کی نشاندہی","شروع کا وقت ریکارڈ"],correct:1,feedback_correct:"صحیح! تالے اور ٹیگ غیر ارادی ری سٹارٹ روکتے ہیں۔",feedback_wrong:"تالے اور ٹیگ کام کے دوران توانائی دوبارہ چالو ہونے سے روکتے ہیں۔"},
+{rule:2,ruleName:"کام کا اجازت نامہ",ruleDesc:"درست اجازت نامے کے ساتھ کام",funFact:"اجازت نامے حادثات <strong>40%</strong> کم کرتے ہیں!",funIcon:"📋",question:"کب رکنا اور دوبارہ جائزہ لینا چاہیے؟",options:["صرف تھکاوٹ میں","اجازت نامے کی شرائط بدل جائیں تو","وقفے کے وقت","کبھی نہیں رکنا"],correct:1,feedback_correct:"صحیح! حالات بدلیں تو فوراً رکیں۔",feedback_wrong:"حالات بدلیں تو فوراً رکیں اور دوبارہ جائزہ لیں۔"},
+{rule:2,ruleName:"کام کا اجازت نامہ",ruleDesc:"درست اجازت نامے کے ساتھ کام",funFact:"ہر مزدور کو <strong>مجاز اور اہل</strong> ہونا ضروری ہے۔",funIcon:"✅",question:"کون سی اجازت نامے کی شرط نہیں؟",options:["اجازت نامے کی ضرورت کی تصدیق","اجازت نامہ سمجھنا","خطرات پر قابو پائے بغیر کام شروع","تمام شرائط پر عمل"],correct:2,feedback_correct:"بالکل! خطرات پر قابو پائے بغیر کام شروع نہیں کر سکتے۔",feedback_wrong:"خطرات پر قابو پائے بغیر کام شروع کرنا حفاظت کی خلاف ورزی ہے۔"},
+{rule:3,ruleName:"PPE",ruleDesc:"صحیح PPE پہنیں",funFact:"ہیلمٹ <strong>450 کلو</strong> طاقت جذب کرتا ہے!",funIcon:"🦺",question:"اضافی PPE کا تعین کیا کرتا ہے؟",options:["مزدور کی مرضی","کام کا اجازت نامہ یا ہدایات","اسٹاک میں دستیابی","ساتھیوں کا فیصلہ"],correct:1,feedback_correct:"بہترین! اجازت نامہ اور ہدایات PPE کا تعین کرتے ہیں۔",feedback_wrong:"اضافی PPE اجازت نامے یا ہدایات سے طے ہوتا ہے۔"},
+{rule:3,ruleName:"PPE",ruleDesc:"صحیح PPE پہنیں",funFact:"PPE زخموں کو <strong>60%</strong> کم کرتا ہے!",funIcon:"🛡️",question:"ساتھی PPE نہ پہنے تو کیا کریں؟",options:["کچھ نہیں","انہیں جوابدہ ٹھہرائیں اور یاد دلائیں","خفیہ رپورٹ","اپنا PPE دے دیں"],correct:1,feedback_correct:"شاباش! دوسروں کو جوابدہ ٹھہرانا آپ کی ذمہ داری ہے۔",feedback_wrong:"PPE نہ پہننے پر دوسروں کو جوابدہ ٹھہرانا ضروری ہے۔"},
+{rule:3,ruleName:"PPE",ruleDesc:"صحیح PPE پہنیں",funFact:"PPE معائنہ میں <strong>صرف 2 منٹ</strong> لگتے ہیں!",funIcon:"🔍",question:"PPE کتنی بار چیک کریں؟",options:["خریدتے وقت ایک بار","باقاعدگی سے","صرف چوٹ کے بعد","سال میں ایک بار"],correct:1,feedback_correct:"صحیح! باقاعدگی سے معائنہ ضروری ہے۔",feedback_wrong:"PPE کا معائنہ باقاعدہ ہونا چاہیے۔"},
+{rule:4,ruleName:"بلندی پر کام",ruleDesc:"گرنے سے بچائیں",funFact:"صرف <strong>6 میٹر</strong> سے گرنا مہلک ہو سکتا ہے!",funIcon:"⬆️",question:"گرنے سے بچاؤ کا سامان کب چیک کریں؟",options:["مہینے میں ایک بار","ہر استعمال سے پہلے","خراب لگے تو","صرف خریدتے وقت"],correct:1,feedback_correct:"بہترین! ہر استعمال سے پہلے چیک کریں۔",feedback_wrong:"ہر استعمال سے پہلے چیک کرنا ضروری ہے۔"},
+{rule:4,ruleName:"بلندی پر کام",ruleDesc:"گرنے سے بچائیں",funFact:"<strong>1 کلو</strong> اوزار 30 میٹر سے <strong>87 کلومیٹر/گھنٹہ</strong> کی رفتار سے گرتا ہے!",funIcon:"🔧",question:"بلندی پر اوزار کیوں محفوظ کریں؟",options:["چوری سے بچاؤ","نیچے مزدوروں پر گرنے سے روکنا","آسان رسائی","انتظامی ضرورت"],correct:1,feedback_correct:"صحیح! نیچے مزدوروں پر گرنے سے روکنے کے لیے۔",feedback_wrong:"نیچے لوگوں پر گرنے سے روکنے کے لیے محفوظ کریں۔"},
+{rule:4,ruleName:"بلندی پر کام",ruleDesc:"گرنے سے بچائیں",funFact:"100% بندھن = <strong>کبھی غیر محفوظ نہیں</strong>!",funIcon:"🔗",question:"100% بندھن کا مطلب؟",options:["صرف سامان باندھنا","محفوظ علاقے سے باہر ہمیشہ منظور شدہ پوائنٹس سے بندھے رہنا","خطرہ محسوس ہو تو باندھنا","بیلٹ سے اوزار باندھنا"],correct:1,feedback_correct:"شاباش! اینکر پوائنٹس سے کبھی علیحدہ نہ ہوں۔",feedback_wrong:"100% بندھن = محفوظ علاقے سے باہر ہمیشہ جڑے رہنا۔"},
+{rule:5,ruleName:"حفاظتی کنٹرول کی خلاف ورزی",ruleDesc:"خلاف ورزی سے پہلے اجازت لیں",funFact:"<strong>70%+ بڑے حادثات</strong> حفاظت کی خلاف ورزی سے!",funIcon:"🚨",question:"حفاظتی کنٹرول غیر فعال کرنے سے پہلے کیا ضروری؟",options:["ساتھیوں کی رضامندی","باقاعدہ پیشگی اجازت","ایمرجنسی میں کچھ نہیں","کافی تجربہ"],correct:1,feedback_correct:"صحیح! باقاعدہ اجازت ہمیشہ ضروری ہے۔",feedback_wrong:"باقاعدہ اجازت ہمیشہ ضروری ہے۔"},
+{rule:5,ruleName:"حفاظتی کنٹرول کی خلاف ورزی",ruleDesc:"خلاف ورزی سے پہلے اجازت لیں",funFact:"رکاوٹیں آپ کی <strong>حفاظت کی لائنیں</strong> ہیں!",funIcon:"🚧",question:"کن حالات میں پیشگی اجازت چاہیے؟",options:["صرف رکاوٹ عبور","صرف طریقہ کار سے انحراف","سب: کنٹرول غیر فعال، انحراف، رکاوٹ عبور","کوئی نہیں"],correct:2,feedback_correct:"بالکل! سب میں اجازت چاہیے۔",feedback_wrong:"سب میں پیشگی اجازت ضروری ہے۔"},
+{rule:6,ruleName:"گرم کام",ruleDesc:"آتش گیر مواد کنٹرول کریں",funFact:"ویلڈنگ چنگاری <strong>5,500°C</strong> تک!",funIcon:"🔥",question:"گرم کام سے پہلے پہلا قدم؟",options:["محفوظ لگے تو شروع","آگ کے ذرائع کی نشاندہی، آتش گیر مواد ہٹائیں","صرف ساتھیوں کو بتائیں","صرف چشمہ پہنیں"],correct:1,feedback_correct:"شاباش! آگ کے ذرائع کی نشاندہی اور آتش گیر مواد ہٹائیں۔",feedback_wrong:"آگ کے ذرائع کی نشاندہی، کنٹرول اور آتش گیر مواد ہٹائیں۔"},
+{rule:6,ruleName:"گرم کام",ruleDesc:"آتش گیر مواد کنٹرول کریں",funFact:"گیس ٹیسٹ کے بغیر گرم کام = <strong>بارودی سرنگ</strong>!",funIcon:"🧪",question:"خطرناک علاقے میں گرم کام میں کیا تصدیق کریں؟",options:["صرف آگ بجھانے والا","گیس ٹیسٹ مکمل اور مسلسل نگرانی","زبانی رضامندی","پانی دستیاب"],correct:1,feedback_correct:"صحیح! گیس ٹیسٹ اور مسلسل نگرانی ضروری۔",feedback_wrong:"گیس ٹیسٹ مکمل اور مسلسل نگرانی ضروری ہے۔"},
+{rule:7,ruleName:"محدود جگہ",ruleDesc:"داخلے سے پہلے اجازت",funFact:"آکسیجن کی کمی سے <strong>15 سیکنڈ</strong> میں بے ہوشی!",funIcon:"😷",question:"محدود جگہ کی شرط نہیں؟",options:["فضا کا ٹیسٹ","نگران موجود","جلدی ہو تو بغیر اجازت داخلہ","ریسکیو پلان"],correct:2,feedback_correct:"بالکل! بغیر اجازت داخلہ کبھی نہیں۔",feedback_wrong:"بغیر اجازت داخلہ بالکل ممنوع!"},
+{rule:7,ruleName:"محدود جگہ",ruleDesc:"داخلے سے پہلے اجازت",funFact:"محدود جگہ کی <strong>60% اموات</strong> غیر تربیت یافتہ بچاؤ کاروں کی!",funIcon:"🆘",question:"پوری مدت نگران کیوں؟",options:["اوقات ریکارڈ","حفاظت کی نگرانی اور ایمرجنسی میں کارروائی","سامان لانا","صرف روایت"],correct:1,feedback_correct:"بہترین! حفاظت اور ایمرجنسی میں فوری کارروائی۔",feedback_wrong:"نگران حفاظت کی نگرانی اور ایمرجنسی میں کارروائی کے لیے۔"},
+{rule:8,ruleName:"خطرے کا علاقہ",ruleDesc:"خطرے کے علاقے سے دور رہیں",funFact:"گرتی چیزیں <strong>25%+</strong> مہلک زخموں کا سبب!",funIcon:"⚠️",question:"کن خطرات سے بچیں؟",options:["حرکت کرتی چیزیں، گاڑیاں، دباؤ کا اخراج، گرتی چیزیں","صرف شور","صرف گرمی","کم روشنی"],correct:0,feedback_correct:"صحیح! ان سب خطرات سے بچیں۔",feedback_wrong:"خطرات: حرکت کرتی چیزیں، گاڑیاں، دباؤ، گرتی چیزیں۔"},
+{rule:8,ruleName:"خطرے کا علاقہ",ruleDesc:"خطرے کے علاقے سے دور رہیں",funFact:"بغیر معائنہ دباؤ والی نلی <strong>ہڈی توڑنے</strong> والی طاقت سے!",funIcon:"💨",question:"دباؤ والی نلیوں میں کیا تصدیق؟",options:["نئی ہوں","معائنہ آلات ہوں","رنگین ہوں","چھوٹی ہوں"],correct:1,feedback_correct:"شاباش! معائنہ آلات ہونے چاہییں۔",feedback_wrong:"دباؤ والی نلیوں میں حفاظتی معائنہ آلات ہونے چاہییں۔"},
+{rule:9,ruleName:"اٹھانے کے عمل",ruleDesc:"اٹھانے کی منصوبہ بندی",funFact:"لٹکے بوجھ کے نیچے چلنا = <strong>ہوا میں گاڑی</strong> کے نیچے!",funIcon:"🏗️",question:"اٹھانے کا مطلق اصول؟",options:["کوئی بھی سامان استعمال","کبھی لٹکے بوجھ کے نیچے نہ چلیں","ہلکے بوجھ میں منصوبہ چھوڑیں","ممنوعہ علاقے عبور کریں"],correct:1,feedback_correct:"صحیح! کبھی لٹکے بوجھ کے نیچے نہ چلیں۔",feedback_wrong:"مطلق اصول: کبھی لٹکے بوجھ کے نیچے نہیں۔"},
+{rule:9,ruleName:"اٹھانے کے عمل",ruleDesc:"اٹھانے کی منصوبہ بندی",funFact:"بغیر تربیت سامان = حادثات <strong>300%</strong> زیادہ!",funIcon:"🎓",question:"اٹھانے کے سامان کی شرط؟",options:["سائٹ پر دستیاب","آپ نے تربیت حاصل کی ہو","ساتھی راضی","نیا ہو"],correct:1,feedback_correct:"بہترین! صرف تربیت یافتہ سامان استعمال کریں۔",feedback_wrong:"صرف وہ سامان جس کی تربیت ملی ہو۔"},
+{rule:10,ruleName:"ڈرائیونگ",ruleDesc:"محفوظ ڈرائیونگ کی پابندی",funFact:"ڈرائیونگ میں فون = حادثے کا خطرہ <strong>4 گنا</strong>!",funIcon:"📵",question:"محفوظ ڈرائیونگ کی خلاف ورزی؟",options:["سیٹ بیلٹ لگانا","محفوظ فاصلہ","ڈرائیونگ میں فون استعمال","راستے کی منصوبہ بندی"],correct:2,feedback_correct:"صحیح! ڈرائیونگ میں فون ممنوع۔",feedback_wrong:"ڈرائیونگ میں فون سنگین خلاف ورزی ہے۔"},
+{rule:10,ruleName:"ڈرائیونگ",ruleDesc:"محفوظ ڈرائیونگ کی پابندی",funFact:"سیٹ بیلٹ موت کا خطرہ <strong>45%</strong> کم کرتی ہے!",funIcon:"🔗",question:"ڈرائیونگ میں کیا حالت ضروری؟",options:["مسافروں سے بات پر توجہ","چوکنا، ہوشیار اور مکمل تیار","تھکاوٹ میں بھی چلائیں","تجربے پر بھروسہ"],correct:1,feedback_correct:"شاباش! چوکنا، ہوشیار اور تیار رہیں۔",feedback_wrong:"ہمیشہ چوکنا، ہوشیار اور مکمل تیار رہنا ضروری ہے۔"},
+{rule:"✋",ruleName:"غیر محفوظ کام روکیں",ruleDesc:"غیر محفوظ کام روکنے کا اختیار",funFact:"ہر ملازم اور ٹھیکیدار کو غیر محفوظ کام روکنے کا <strong>مکمل اختیار</strong>!",funIcon:"✋",question:"غیر محفوظ کام روکنے کا اختیار کس کو؟",options:["صرف مینیجر","صرف حفاظتی افسر","تمام ملازمین اور ٹھیکیدار","صرف سرکاری ادارے"],correct:2,feedback_correct:"بالکل! تمام ملازمین اور ٹھیکیداروں کو اختیار ہے۔",feedback_wrong:"تمام ملازمین اور ٹھیکیداروں کو مکمل اختیار ہے۔"},
+{rule:"✋",ruleName:"غیر محفوظ کام روکیں",ruleDesc:"غیر محفوظ کام روکنے کا اختیار",funFact:"غیر محفوظ کام روکنا ساتھیوں کی <strong>جان بچا</strong> سکتا ہے!",funIcon:"🛑",question:"کن حالات میں کام روکنا چاہیے؟",options:["صرف PPE نہ پہنی ہو","صرف توانائی الگ نہ ہو","سب: توانائی الگ نہیں، PPE نہیں، حفاظتی طریقہ کار نہیں","کبھی نہیں روکنا"],correct:2,feedback_correct:"صحیح! ان سب حالات میں کام روکیں۔",feedback_wrong:"کام روکیں: توانائی الگ نہیں، PPE نہیں، حفاظتی طریقہ کار نہیں۔"}
+];
+
+const langLabels = {ar:'عربي',en:'English',bn:'বাংলা',ur:'اردو',hi:'हिंदी'};
+const langHeaders = {ar:'اختر اللغة',en:'Select Language',bn:'ভাষা নির্বাচন করুন',ur:'زبان منتخب کریں',hi:'भाषा चुनें'};
+
+function toggleLangDropdown(){
+const btn = document.getElementById('langGlobeBtn');
+const dd = document.getElementById('langDropdown');
+const isOpen = dd.classList.contains('open');
+btn.classList.toggle('open',!isOpen);
+dd.classList.toggle('open',!isOpen);
+}
+
+function closeLangDropdown(){
+document.getElementById('langGlobeBtn').classList.remove('open');
+document.getElementById('langDropdown').classList.remove('open');
+}
+
+function pickLang(l){
+closeLangDropdown();
+setLang(l);
+}
+
+// Close dropdown on outside click
+document.addEventListener('click',function(e){
+if(!document.getElementById('langWrap').contains(e.target)) closeLangDropdown();
+});
+
+function setLang(l) {
+lang = l;
+document.documentElement.lang = l;
+document.documentElement.dir = (l === 'ar' || l === 'ur') ? 'rtl' : 'ltr';
+document.body.className = l === 'ar' ? '' : l;
+// Update selector UI
+document.getElementById('currentLangLabel').textContent = langLabels[l];
+document.getElementById('langDropHeader').textContent = langHeaders[l];
+document.querySelectorAll('.lang-option').forEach(o=>o.classList.remove('active'));
+document.getElementById('opt'+l.charAt(0).toUpperCase()+l.slice(1)).classList.add('active');
+refreshStaticUI();
+}
+
+function refreshStaticUI() {
+const u = UI[lang];
+// Reg screen
+document.getElementById('regMainTitle').textContent = u.title;
+document.getElementById('regTitle').textContent = u.regTitle;
+document.getElementById('regSub').textContent = u.regSub;
+document.getElementById('labelName').textContent = u.labelName;
+document.getElementById('labelId').textContent = u.labelId;
+document.getElementById('regBtnText').textContent = u.regBtn;
+document.getElementById('inputName').placeholder = u.labelName;
+document.getElementById('inputId').placeholder = u.labelId;
+// Home
+document.getElementById('homeTitle').textContent = u.title;
+document.getElementById('homeLearnTitle').textContent = u.learnTitle;
+document.getElementById('homeQuizTitle').textContent = u.quizTitle;
+// Back navs
+document.querySelectorAll('.learn-nav span').forEach(s => s.textContent = u.back);
+// Score section static text
+const statTxts = document.querySelectorAll('.stat-txt');
+if(statTxts[0]) statTxts[0].textContent = u.correctTxt;
+if(statTxts[1]) statTxts[1].textContent = u.wrongTxt;
+document.querySelector('.restart-btn').textContent = u.restart;
+document.querySelector('.home-btn-bottom').textContent = u.home;
+document.getElementById('downloadBtnText').textContent = u.download;
+// Stop banner
+document.getElementById('stopHomeTitle').textContent = u.stopTitle;
+document.getElementById('stopHomeSub').textContent = u.stopSub;
+}
+
+// ===== REGISTRATION =====
+let userName = '', userId = '';
+const results = []; // Store all quiz results
+
+function checkRegForm() {
+const name = document.getElementById('inputName').value.trim();
+const id = document.getElementById('inputId').value.trim();
+document.getElementById('regBtn').classList.toggle('enabled', name.length > 0 && id.length > 0);
+}
+
+function submitReg() {
+const name = document.getElementById('inputName').value.trim();
+const id = document.getElementById('inputId').value.trim();
+if (!name || !id) return;
+userName = name;
+userId = id;
+showScreen('homeScreen');
+}
+
+// ===== DOWNLOAD RESULT =====
+function downloadResult() {
+const total = shuffledQuiz.length;
+const pct = Math.round((quizScore / total) * 100);
+const now = new Date();
+const dateStr = now.toLocaleDateString('en-GB');
+const timeStr = now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+const langName = {ar:'العربية',en:'English',bn:'বাংলা',ur:'اردو'}[lang];
+const passStatus = pct >= 80;
+
+// CSV content
+let csv = '\uFEFF'; // BOM for Excel Arabic support
+csv += 'Employee Name,Employee ID,Language,Score,Total Questions,Percentage,Status,Date,Time\n';
+csv += `"${userName}","${userId}","${langName}",${quizScore},${total},${pct}%,${passStatus ? 'PASS' : 'FAIL'},${dateStr},${timeStr}\n`;
+
+// Add to stored results
+results.push({name:userName,id:userId,lang:langName,score:quizScore,total,pct,status:passStatus?'PASS':'FAIL',date:dateStr,time:timeStr});
+
+// If multiple results stored, add all
+if (results.length > 1) {
+csv = '\uFEFF';
+csv += 'Employee Name,Employee ID,Language,Score,Total Questions,Percentage,Status,Date,Time\n';
+results.forEach(r => {
+csv += `"${r.name}","${r.id}","${r.lang}",${r.score},${r.total},${r.pct}%,${r.status},${r.date},${r.time}\n`;
+});
+}
+
+const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = `Safety_Quiz_Results_${dateStr.replace(/\//g,'-')}.csv`;
+a.click();
+URL.revokeObjectURL(url);
+}
+
+// ===== RULES DATA =====
+const rulesData = [
+{
+number: 1,
+name: "عزل الطاقة",
+subtitle: "التحقق من العزل وعدم وجود أي طاقة قبل بدء العمل",
+icon: "🔌",
+funFact: "الصدمات الكهربائية مسؤولة عن أكثر من <strong>١٦٠ حالة وفاة سنويًا</strong> في بيئات العمل الصناعية حول العالم. نظام القفل والعلامة (LOTO) أنقذ حياة أكثر من <strong>١٢٠,٠٠٠ عامل</strong> منذ بدء تطبيقه عالميًا!",
+funIcon: "⚡",
+details: [
+{ icon: "🔍", text: "قم بتحديد جميع مصادر الطاقة المتصلة بالمعدات قبل أي عمل" },
+{ icon: "🔒", text: "تأكد من عزل كافة مصادر الطاقة ووضع الأقفال والبطاقات التحذيرية عليها" },
+{ icon: "⚡", text: "تحقق من عدم تسرب أو وجود أي قدر من الطاقة المتبقية أو المخزنة" },
+{ icon: "🧪", text: "اختبر الطاقة المتبقية أو المخزنة باستخدام أجهزة الفحص المعتمدة" },
+{ icon: "🛡️", text: "لا تبدأ العمل أبدًا إلا بعد التأكد الكامل من أن جميع مصادر الطاقة معزولة وآمنة" }
+]
+},
+{
+number: 2,
+name: "تصريح العمل",
+subtitle: "العمل بتصريح ساري المفعول إذا تطلب العمل ذلك",
+icon: "📋",
+funFact: "تصاريح العمل تقلل حوادث العمل الخطيرة بنسبة تصل إلى <strong>٤٠٪</strong> في المنشآت الصناعية! في الشركة السعودية للكهرباء، يُعد تصريح العمل <strong>وثيقة حياة</strong> لا يمكن تجاوزها.",
+funIcon: "📋",
+details: [
+{ icon: "✅", text: "تأكد مما إذا كان التصريح مطلوبًا قبل البدء بأي عمل" },
+{ icon: "👷", text: "يجب أن تكون مخولاً ومؤهلاً لأداء العمل المحدد في التصريح" },
+{ icon: "📖", text: "افهم التصريح بالكامل - اقرأه وتأكد من استيعاب جميع بنوده" },
+{ icon: "🔐", text: "تأكد أن المخاطر تم التحكم بها وأن العمل يمكن البدء به بشكل آمن" },
+{ icon: "⏸️", text: "توقف وأعد التقييم فورًا إذا تغيرت الظروف عن الموصوف في التصريح" },
+{ icon: "📝", text: "طبّق جميع متطلبات تصريح العمل بما فيها إنهاء التصريح عند الانتهاء" }
+]
+},
+{
+number: 3,
+name: "معدات الحماية الشخصية",
+subtitle: "ارتدِ واستخدم معدات الحماية الشخصية المناسبة لهذه المهمة",
+icon: "🦺",
+funFact: "معدات الحماية الشخصية (PPE) تقلل إصابات العمل بنسبة تصل إلى <strong>٦٠٪</strong>! خوذة السلامة وحدها يمكنها امتصاص صدمة تعادل <strong>٤٥٠ كيلوغرام</strong> من القوة.",
+funIcon: "🛡️",
+details: [
+{ icon: "📋", text: "اعرف واستخدم معدات الحماية الشخصية الإضافية المطلوبة حسب تصريح العمل أو تعليمات العمل" },
+{ icon: "📌", text: "اعرف واستخدم معدات الوقاية الشخصية المحددة وفقًا للوحات الإرشادية والتعليمات" },
+{ icon: "🔍", text: "تحقق بانتظام من حالة معدات الوقاية الشخصية الخاصة بك" },
+{ icon: "👥", text: "حمّل الآخرين المسؤولية عند عدم ارتداء أو استخدام معدات الوقاية الشخصية المحددة لهم" }
+]
+},
+{
+number: 4,
+name: "العمل على المرتفعات",
+subtitle: "احمِ نفسك من السقوط عند العمل على المرتفعات",
+icon: "🏗️",
+funFact: "السقوط من المرتفعات هو <strong>السبب الأول للوفيات</strong> في قطاع البناء والصيانة عالميًا! يتسبب في أكثر من <strong>٣٠٠ حالة وفاة سنويًا</strong> في الولايات المتحدة وحدها.",
+funIcon: "⬆️",
+details: [
+{ icon: "🔍", text: "افحص معدات الحماية من السقوط قبل الاستخدام في كل مرة" },
+{ icon: "🔧", text: "قم بتأمين الأدوات ومواد العمل لمنع سقوطها على من هم أسفلك" },
+{ icon: "🔗", text: "تحقق من الربط ١٠٠٪ بنقاط الربط المعتمدة أثناء وجودك خارج المنطقة المحمية" }
+]
+},
+{
+number: 5,
+name: "تجاوز وسائل تحكم السلامة",
+subtitle: "الحصول على إذن قبل تجاوز أو تعطيل وسائل تحكم السلامة",
+icon: "🚧",
+funFact: "أكثر من <strong>٧٠٪ من الحوادث الصناعية الكبرى</strong> تحدث بسبب تجاوز أو تعطيل وسائل السلامة دون إذن! وسائل التحكم بالسلامة موجودة <strong>لحمايتك أنت أولاً</strong>.",
+funIcon: "🚨",
+details: [
+{ icon: "📖", text: "افهم واستخدم معدات وإجراءات السلامة الضرورية التي تنطبق على مهمتك" },
+{ icon: "🚫", text: "احصل على إذن قبل تعطيل أو تجاوز معدات أو وسائل التحكم بالسلامة" },
+{ icon: "↩️", text: "احصل على إذن قبل الانحراف عن الإجراءات المتبعة" },
+{ icon: "🔶", text: "احصل على إذن قبل تجاوز الحواجز الأمنية والسلامة" }
+]
+},
+{
+number: 6,
+name: "العمل الساخن",
+subtitle: "السيطرة على المواد القابلة للاشتعال ومصادر الاشتعال",
+icon: "🔥",
+funFact: "العمل الساخن مثل اللحام والقطع مسؤول عن <strong>٥٪ من حرائق المنشآت الصناعية</strong> عالميًا! شرارة لحام واحدة يمكن أن تصل حرارتها إلى <strong>٥,٥٠٠ درجة مئوية</strong>.",
+funIcon: "🔥",
+details: [
+{ icon: "🎯", text: "حدد مصادر الاشتعال وتحكم بها قبل البدء بأي عمل" },
+{ icon: "🧹", text: "قبل البدء بأي عمل ساخن: تأكد من إزالة المواد القابلة للاشتعال أو عزلها" },
+{ icon: "📝", text: "احصل على التفويض اللازم قبل البدء بالعمل الساخن" },
+{ icon: "🧪", text: "في المناطق الخطرة: تأكد من اكتمال اختبار الغازات قبل البدء" },
+{ icon: "📊", text: "راقب الغازات بشكل دوري أثناء العمل في المناطق الخطرة" }
+]
+},
+{
+number: 7,
+name: "العمل في الأماكن المحصورة",
+subtitle: "الحصول على إذن قبل دخول مكان محصور",
+icon: "🚪",
+funFact: "الأماكن المحصورة تتسبب في وفاة <strong>أكثر من ١٠٠ عامل سنويًا</strong> حول العالم! نقص الأكسجين يمكن أن يُفقدك الوعي في <strong>أقل من ١٥ ثانية</strong>.",
+funIcon: "⚠️",
+details: [
+{ icon: "🔌", text: "تأكد أن مصادر الطاقة معزولة قبل الدخول" },
+{ icon: "🌬️", text: "تأكد أن المحيط الجوي قد تم اختباره ومراقبته" },
+{ icon: "😷", text: "تحقق من جهاز التنفس الخاص بك واستخدمه عند الحاجة" },
+{ icon: "👀", text: "تأكد أن هناك مراقب للعمل بالموقع طوال فترة العمل" },
+{ icon: "🆘", text: "تأكد من وجود خطة الإنقاذ وجاهزية تنفيذها" },
+{ icon: "📋", text: "احصل على تصريح قبل الدخول للمكان المحصور" }
+]
+},
+{
+number: 8,
+name: "العمل في منطقة الخطر",
+subtitle: "أبقِ نفسك والآخرين بعيدًا عن منطقة الخطر",
+icon: "⚠️",
+funFact: "الأجسام المتساقطة والمركبات المتحركة تسبب <strong>أكثر من ٢٥٪ من إصابات العمل</strong> القاتلة! التمركز الصحيح ينقذ الأرواح.",
+funIcon: "🚨",
+details: [
+{ icon: "📍", text: "تمركز لتجنب: الأجسام المتحركة، المركبات، انطلاق الضغط المحبوس، والأجسام المتساقطة" },
+{ icon: "🚧", text: "أنشئ الحواجز ومناطق الحظر والتزم بها" },
+{ icon: "🔩", text: "اتخذ إجراءات لتأمين الأجسام غير المثبتة والإبلاغ عن الأجسام التي يحتمل سقوطها" },
+{ icon: "🔍", text: "تأكد أن جميع الخراطيم المضغوطة مزودة بأداة فحص قبل بدء العمل" }
+]
+},
+{
+number: 9,
+name: "عمليات الرفع",
+subtitle: "خطط لعمليات الرفع والتحكم في المنطقة",
+icon: "🏗️",
+funFact: "حوادث الرفع تكلف الصناعة أكثر من <strong>مليار دولار سنويًا</strong>! المشي تحت حمولة معلقة وزنها طن واحد يعادل المشي تحت <strong>سيارة معلقة في الهواء</strong>.",
+funIcon: "🏋️",
+details: [
+{ icon: "🔍", text: "تأكد أن المعدة والحمولة قد تم فحصهما وأنهما مناسبتان للغرض" },
+{ icon: "🎓", text: "استخدم فقط المعدات التي تدربت على استخدامها" },
+{ icon: "📋", text: "ضع خطة رفع وأجرِ تقييم مخاطر لعملية الرفع الحرجة" },
+{ icon: "🚧", text: "ضع والتزم بالحواجز ومناطق الحظر حول منطقة الرفع" },
+{ icon: "🚫", text: "لا تمشِ أبدًا تحت حمولة معلقة" }
+]
+},
+{
+number: 10,
+name: "قيادة المركبات أو المعدات",
+subtitle: "اتبع تعليمات القيادة الآمنة",
+icon: "🚗",
+funFact: "حوادث المركبات هي <strong>السبب الأول للوفيات</strong> المرتبطة بالعمل في العالم! استخدام الهاتف أثناء القيادة يزيد خطر الحوادث بمقدار <strong>٤ أضعاف</strong>.",
+funIcon: "🚨",
+details: [
+{ icon: "🔗", text: "اربط حزام الأمان دائمًا عند قيادة أي مركبة" },
+{ icon: "⏱️", text: "لا تتجاوز حدود السرعة، وأهدئ السرعة وفقًا لظروف الطريق" },
+{ icon: "📵", text: "لا تستخدم الهاتف أو تعمل على تشغيل الأجهزة أثناء القيادة" },
+{ icon: "👁️", text: "كن لائقًا، منتبهًا، وفي حالة تأهب تام أثناء القيادة وخطط لرحلتك" },
+{ icon: "↔️", text: "حافظ دائمًا على مسافة آمنة بينك وبين المركبة التي أمامك" }
+]
+},
+{
+number: "✋",
+name: "أوقف العمل غير الآمن",
+subtitle: "أحافظ على حياتي وحياة الآخرين باستخدام صلاحيتي بإيقاف العمل غير الآمن",
+icon: "🛑",
+isSpecial: true,
+funFact: "جميع الموظفون والمقاولون لديهم <strong>الصلاحية الكاملة</strong> لإيقاف العمل غير الآمن! أنت مسؤول عن سلامتك <strong>وسلامة الآخرين</strong>.",
+funIcon: "✋",
+details: [
+{ icon: "⚡", text: "أوقف العمل إذا لم يتم عزل الطاقة والتأكد من خلال الاختبار" },
+{ icon: "🦺", text: "أوقف العمل عند عدم ارتداء معدات الوقاية الشخصية المناسبة للعمل" },
+{ icon: "📋", text: "أوقف العمل إذا لم يتم إتباع إجراءات السلامة بشكل صحيح" },
+{ icon: "👥", text: "أنا مسؤول عن سلامتي وسلامة الآخرين" }
+]
+}
+];
+
+// ===== QUIZ DATA =====
+const quizData = [
+{
+rule: 1, ruleName: "عزل الطاقة", ruleDesc: "التحقق من العزل وعدم وجود أي طاقة قبل بدء العمل",
+funFact: "الطاقة المخزنة في المكثفات يمكن أن تبقى <strong>خطرة لساعات</strong> حتى بعد فصل التيار!", funIcon: "⚡",
+question: "ماذا يجب أن تفعل قبل البدء بأي عمل يتضمن معدات كهربائية؟",
+options: ["البدء فورًا لتوفير الوقت", "تحديد وعزل جميع مصادر الطاقة ووضع الأقفال والبطاقات التحذيرية", "إبلاغ الزملاء فقط", "ارتداء القفازات فقط"],
+correct: 1,
+feedback_correct: "ممتاز! يجب تحديد جميع مصادر الطاقة، عزلها، ووضع الأقفال والبطاقات التحذيرية.",
+feedback_wrong: "الإجابة الصحيحة: تحديد وعزل جميع مصادر الطاقة ووضع الأقفال والبطاقات التحذيرية."
+},
+{
+rule: 1, ruleName: "عزل الطاقة", ruleDesc: "التحقق من العزل وعدم وجود أي طاقة قبل بدء العمل",
+funFact: "نظام القفل والعلامة (LOTO) أنقذ حياة أكثر من <strong>١٢٠,٠٠٠ عامل</strong> منذ تطبيقه!", funIcon: "🔒",
+question: "ما هو الغرض من وضع الأقفال والبطاقات التحذيرية؟",
+options: ["لتزيين المعدات", "لمنع أي شخص من إعادة تشغيل مصادر الطاقة أثناء العمل", "لتحديد ملكية المعدات", "لتسجيل وقت بدء العمل"],
+correct: 1,
+feedback_correct: "صحيح! الأقفال والبطاقات تمنع إعادة التشغيل غير المتعمد وتحمي العاملين.",
+feedback_wrong: "الأقفال والبطاقات التحذيرية تمنع أي شخص من إعادة تشغيل مصادر الطاقة أثناء العمل."
+},
+{
+rule: 2, ruleName: "تصريح العمل", ruleDesc: "العمل بتصريح ساري المفعول إذا تطلب العمل ذلك",
+funFact: "تصاريح العمل تقلل الحوادث بنسبة <strong>٤٠٪</strong> في المنشآت الصناعية!", funIcon: "📋",
+question: "متى يجب التوقف وإعادة التقييم أثناء العمل؟",
+options: ["عند الشعور بالتعب فقط", "إذا تغيرت الظروف عن ما هو محدد في التصريح", "عند انتهاء وقت الراحة", "لا يجب التوقف أبدًا"],
+correct: 1,
+feedback_correct: "صحيح! يجب التوقف وإعادة التقييم فورًا إذا تغيرت الظروف.",
+feedback_wrong: "إذا تغيرت الظروف عن ما هو محدد في التصريح، يجب التوقف فورًا وإعادة التقييم."
+},
+{
+rule: 2, ruleName: "تصريح العمل", ruleDesc: "العمل بتصريح ساري المفعول إذا تطلب العمل ذلك",
+funFact: "كل عامل في SEC يجب أن يكون <strong>مخولاً ومؤهلاً</strong> لأداء العمل المحدد في التصريح.", funIcon: "✅",
+question: "أي من التالي ليس من متطلبات تصريح العمل؟",
+options: ["التأكد من أن التصريح مطلوب", "فهم محتوى التصريح", "البدء بالعمل حتى لو لم تُحكم السيطرة على المخاطر", "تطبيق جميع متطلبات التصريح"],
+correct: 2,
+feedback_correct: "بالضبط! لا يجوز أبدًا البدء بالعمل قبل التأكد من السيطرة على جميع المخاطر.",
+feedback_wrong: "البدء بالعمل دون السيطرة على المخاطر مخالف لقواعد السلامة."
+},
+{
+rule: 3, ruleName: "معدات الحماية الشخصية", ruleDesc: "ارتدِ واستخدم معدات الحماية الشخصية المناسبة",
+funFact: "خوذة السلامة يمكنها امتصاص صدمة تعادل <strong>٤٥٠ كيلوغرام</strong> من القوة!", funIcon: "🦺",
+question: "ما الذي يحدد نوع معدات الحماية الشخصية الإضافية المطلوبة؟",
+options: ["رغبة العامل الشخصية", "تصريح العمل أو تعليمات العمل", "توفر المعدات في المخزن", "قرار الزملاء"],
+correct: 1,
+feedback_correct: "أحسنت! تصريح العمل وتعليمات العمل هما ما يحددان معدات الحماية الإضافية المطلوبة.",
+feedback_wrong: "معدات الحماية الإضافية تُحدد حسب ما هو منصوص عليه في تصريح العمل أو تعليمات العمل."
+},
+{
+rule: 3, ruleName: "معدات الحماية الشخصية", ruleDesc: "ارتدِ واستخدم معدات الحماية الشخصية المناسبة",
+funFact: "معدات الحماية الشخصية تقلل إصابات العمل بنسبة تصل إلى <strong>٦٠٪</strong>!", funIcon: "🛡️",
+question: "ماذا يجب أن تفعل إذا رأيت زميلك لا يرتدي معدات الوقاية المحددة له؟",
+options: ["لا شيء، هذا شأنه", "أحمّله المسؤولية وأنبّهه لضرورة ارتدائها", "أبلغ عنه سرًا", "أعطيه معداتي الشخصية"],
+correct: 1,
+feedback_correct: "ممتاز! من واجبك تحميل الآخرين المسؤولية عند عدم ارتداء معدات الوقاية المحددة لهم.",
+feedback_wrong: "يجب عليك تحميل الآخرين المسؤولية وتنبيههم عند عدم ارتداء معدات الوقاية الشخصية."
+},
+{
+rule: 3, ruleName: "معدات الحماية الشخصية", ruleDesc: "ارتدِ واستخدم معدات الحماية الشخصية المناسبة",
+funFact: "فحص معدات الحماية يستغرق <strong>دقيقتين فقط</strong> لكنه قد ينقذ حياتك بالكامل!", funIcon: "🔍",
+question: "كم مرة يجب التحقق من حالة معدات الوقاية الشخصية؟",
+options: ["مرة واحدة عند الشراء", "بانتظام وبشكل دوري", "فقط عند حدوث إصابة", "مرة في السنة"],
+correct: 1,
+feedback_correct: "صحيح! يجب التحقق بانتظام من حالة معدات الوقاية الشخصية الخاصة بك.",
+feedback_wrong: "التحقق من حالة معدات الوقاية يجب أن يكون بانتظام وبشكل دوري وليس فقط عند الحاجة."
+},
+{
+rule: 4, ruleName: "العمل على المرتفعات", ruleDesc: "احمِ نفسك من السقوط عند العمل على المرتفعات",
+funFact: "السقوط من ارتفاع <strong>٦ أمتار فقط</strong> يمكن أن يكون قاتلاً! لهذا الربط ١٠٠٪ أمر حيوي.", funIcon: "⬆️",
+question: "متى يجب فحص معدات الحماية من السقوط؟",
+options: ["مرة في الشهر", "قبل كل استخدام", "فقط إذا بدت تالفة", "عند شرائها فقط"],
+correct: 1,
+feedback_correct: "أحسنت! يجب فحص معدات الحماية من السقوط قبل كل استخدام بدون استثناء.",
+feedback_wrong: "يجب فحص معدات الحماية من السقوط قبل كل استخدام وليس فقط عند الشك في تلفها."
+},
+{
+rule: 4, ruleName: "العمل على المرتفعات", ruleDesc: "احمِ نفسك من السقوط عند العمل على المرتفعات",
+funFact: "سقوط أداة صغيرة وزنها <strong>كيلوغرام واحد</strong> من ارتفاع ٣٠ متر تصل سرعتها إلى <strong>٨٧ كم/ساعة</strong>!", funIcon: "🔧",
+question: "لماذا يجب تأمين الأدوات ومواد العمل عند العمل على المرتفعات؟",
+options: ["لمنع سرقتها", "لمنع سقوطها على من هم أسفلك", "لسهولة الوصول إليها", "لأن ذلك مطلب إداري فقط"],
+correct: 1,
+feedback_correct: "صحيح! تأمين الأدوات يمنع سقوطها وإصابة العاملين أسفل منطقة العمل.",
+feedback_wrong: "يجب تأمين الأدوات والمواد لمنع سقوطها على الأشخاص الموجودين أسفل منطقة العمل."
+},
+{
+rule: 4, ruleName: "العمل على المرتفعات", ruleDesc: "احمِ نفسك من السقوط عند العمل على المرتفعات",
+funFact: "الربط ١٠٠٪ يعني أنك <strong>لا تكون بدون حماية أبدًا</strong> حتى أثناء التنقل بين نقاط الربط!", funIcon: "🔗",
+question: "ماذا يعني الربط ١٠٠٪ بنقاط الربط المعتمدة؟",
+options: ["ربط المعدات فقط", "أن تكون مربوطًا بشكل مستمر أثناء وجودك خارج المنطقة المحمية", "ربط نفسك عند الشعور بالخطر فقط", "ربط الأدوات بالحزام"],
+correct: 1,
+feedback_correct: "ممتاز! الربط ١٠٠٪ يعني عدم الانفصال أبدًا عن نقاط الربط المعتمدة خارج المنطقة المحمية.",
+feedback_wrong: "الربط ١٠٠٪ يعني أن تكون مربوطًا بشكل مستمر بنقاط الربط المعتمدة أثناء وجودك خارج المنطقة المحمية."
+},
+{
+rule: 5, ruleName: "تجاوز وسائل تحكم السلامة", ruleDesc: "الحصول على إذن قبل تجاوز أو تعطيل وسائل تحكم السلامة",
+funFact: "أكثر من <strong>٧٠٪ من الحوادث الصناعية الكبرى</strong> ناتجة عن تجاوز وسائل السلامة!", funIcon: "🚨",
+question: "ما الذي يجب الحصول عليه قبل تعطيل أو تجاوز وسائل التحكم بالسلامة؟",
+options: ["موافقة الزملاء", "إذن رسمي مسبق", "لا شيء إذا كانت الحالة طارئة", "خبرة سابقة كافية"],
+correct: 1,
+feedback_correct: "صحيح! يجب الحصول على إذن رسمي قبل أي تعطيل أو تجاوز لوسائل السلامة.",
+feedback_wrong: "يجب دائمًا الحصول على إذن رسمي قبل تعطيل أو تجاوز أي من وسائل التحكم بالسلامة."
+},
+{
+rule: 5, ruleName: "تجاوز وسائل تحكم السلامة", ruleDesc: "الحصول على إذن قبل تجاوز أو تعطيل وسائل تحكم السلامة",
+funFact: "الحواجز الأمنية ليست عوائق — بل هي <strong>خطوط دفاع</strong> صُممت لحمايتك وحماية زملائك!", funIcon: "🚧",
+question: "أي من الحالات التالية يتطلب الحصول على إذن مسبق؟",
+options: ["تجاوز الحواجز الأمنية فقط", "الانحراف عن الإجراءات المتبعة فقط", "جميع ما سبق: تعطيل وسائل السلامة، الانحراف عن الإجراءات، وتجاوز الحواجز", "لا شيء مما ذُكر"],
+correct: 2,
+feedback_correct: "بالضبط! كل هذه الحالات تتطلب الحصول على إذن مسبق: تعطيل وسائل السلامة، الانحراف عن الإجراءات، وتجاوز الحواجز.",
+feedback_wrong: "جميع هذه الحالات تتطلب إذنًا: تعطيل وسائل السلامة، والانحراف عن الإجراءات، وتجاوز الحواجز."
+},
+{
+rule: 6, ruleName: "العمل الساخن", ruleDesc: "السيطرة على المواد القابلة للاشتعال ومصادر الاشتعال",
+funFact: "شرارة لحام واحدة يمكن أن تصل حرارتها إلى <strong>٥,٥٠٠ درجة مئوية</strong>!", funIcon: "🔥",
+question: "ما أول خطوة يجب اتخاذها قبل البدء بأي عمل ساخن؟",
+options: ["البدء مباشرة إذا كانت المنطقة تبدو آمنة", "تحديد مصادر الاشتعال والتحكم بها وإزالة المواد القابلة للاشتعال", "إبلاغ الزملاء فقط", "ارتداء نظارات الحماية فقط"],
+correct: 1,
+feedback_correct: "ممتاز! يجب تحديد مصادر الاشتعال والتحكم بها وإزالة أو عزل المواد القابلة للاشتعال.",
+feedback_wrong: "قبل أي عمل ساخن، يجب تحديد مصادر الاشتعال والتحكم بها وإزالة أو عزل المواد القابلة للاشتعال."
+},
+{
+rule: 6, ruleName: "العمل الساخن", ruleDesc: "السيطرة على المواد القابلة للاشتعال ومصادر الاشتعال",
+funFact: "العمل الساخن في المناطق الخطرة بدون اختبار غازات يشبه <strong>المشي في حقل ألغام</strong>!", funIcon: "🧪",
+question: "عند العمل الساخن في منطقة خطرة، ما الذي يجب التأكد منه؟",
+options: ["وجود طفاية حريق فقط", "اكتمال اختبار الغازات ومراقبتها بشكل دوري", "موافقة الزملاء الشفهية", "توفر الماء في المنطقة"],
+correct: 1,
+feedback_correct: "صحيح! يجب اكتمال اختبار الغازات ومراقبتها بشكل دوري في المناطق الخطرة.",
+feedback_wrong: "في المناطق الخطرة يجب التأكد من اكتمال اختبار الغازات ومراقبتها بشكل دوري."
+},
+{
+rule: 7, ruleName: "العمل في الأماكن المحصورة", ruleDesc: "الحصول على إذن قبل دخول مكان محصور",
+funFact: "نقص الأكسجين في مكان محصور يمكن أن يُفقدك الوعي في <strong>أقل من ١٥ ثانية</strong>!", funIcon: "😷",
+question: "أي من التالي ليس من متطلبات العمل في الأماكن المحصورة؟",
+options: ["اختبار المحيط الجوي ومراقبته", "وجود مراقب بالموقع طوال فترة العمل", "الدخول بدون تصريح إذا كانت المهمة سريعة", "وجود خطة إنقاذ جاهزة"],
+correct: 2,
+feedback_correct: "بالضبط! لا يجوز أبدًا الدخول لمكان محصور بدون تصريح مهما كانت المهمة قصيرة.",
+feedback_wrong: "الدخول بدون تصريح ممنوع تمامًا! يجب الحصول على تصريح دائمًا قبل دخول مكان محصور."
+},
+{
+rule: 7, ruleName: "العمل في الأماكن المحصورة", ruleDesc: "الحصول على إذن قبل دخول مكان محصور",
+funFact: "أكثر من <strong>٦٠٪ من وفيات الأماكن المحصورة</strong> تحدث لعمال الإنقاذ غير المدربين!", funIcon: "🆘",
+question: "لماذا يجب وجود مراقب بالموقع طوال فترة العمل في مكان محصور؟",
+options: ["لتسجيل ساعات العمل", "لمراقبة سلامة العاملين والتدخل في حالات الطوارئ", "لإحضار المعدات", "لأن ذلك تقليد متبع فقط"],
+correct: 1,
+feedback_correct: "أحسنت! المراقب يضمن سلامة العاملين ويمكنه التدخل السريع في حالات الطوارئ.",
+feedback_wrong: "المراقب يتواجد لمراقبة سلامة العاملين والتدخل الفوري في أي حالة طوارئ."
+},
+{
+rule: 8, ruleName: "العمل في منطقة الخطر", ruleDesc: "أبقِ نفسك والآخرين بعيدًا عن منطقة الخطر",
+funFact: "الأجسام المتساقطة والمركبات المتحركة تسبب <strong>أكثر من ٢٥٪</strong> من إصابات العمل القاتلة!", funIcon: "⚠️",
+question: "ما هي المخاطر التي يجب أن تتمركز بعيدًا عنها في منطقة الخطر؟",
+options: ["الأجسام المتحركة والمركبات وانطلاق الضغط المحبوس والأجسام المتساقطة", "الضوضاء فقط", "درجة الحرارة المرتفعة فقط", "الإضاءة الضعيفة"],
+correct: 0,
+feedback_correct: "صحيح! يجب تجنب الأجسام المتحركة والمركبات وانطلاق الضغط المحبوس والأجسام المتساقطة.",
+feedback_wrong: "المخاطر الرئيسية هي: الأجسام المتحركة، المركبات، انطلاق الضغط المحبوس، والأجسام المتساقطة."
+},
+{
+rule: 8, ruleName: "العمل في منطقة الخطر", ruleDesc: "أبقِ نفسك والآخرين بعيدًا عن منطقة الخطر",
+funFact: "خرطوم مضغوط بدون أداة فحص يمكن أن ينطلق بقوة <strong>تكسر العظام</strong>!", funIcon: "💨",
+question: "ماذا يجب التأكد منه بخصوص الخراطيم المضغوطة قبل بدء العمل؟",
+options: ["أنها جديدة", "أنها مزودة بأداة فحص", "أنها ملونة بلون واضح", "أنها قصيرة الطول"],
+correct: 1,
+feedback_correct: "ممتاز! يجب التأكد من أن جميع الخراطيم المضغوطة مزودة بأداة فحص قبل بدء العمل.",
+feedback_wrong: "يجب التأكد من أن جميع الخراطيم المضغوطة مزودة بأداة فحص قبل البدء."
+},
+{
+rule: 9, ruleName: "عمليات الرفع", ruleDesc: "خطط لعمليات الرفع والتحكم في المنطقة",
+funFact: "المشي تحت حمولة معلقة وزنها طن يعادل المشي تحت <strong>سيارة معلقة في الهواء</strong>!", funIcon: "🏗️",
+question: "أي من التالي قاعدة مطلقة لا استثناء لها في عمليات الرفع؟",
+options: ["استخدام أي معدة متوفرة", "عدم المشي أبدًا تحت حمولة معلقة", "العمل بدون خطة إذا كانت الحمولة خفيفة", "تجاوز مناطق الحظر للاختصار"],
+correct: 1,
+feedback_correct: "صحيح! لا تمشِ أبدًا تحت حمولة معلقة - هذه قاعدة مطلقة بدون استثناء.",
+feedback_wrong: "القاعدة المطلقة: لا تمشِ أبدًا تحت حمولة معلقة مهما كانت الظروف."
+},
+{
+rule: 9, ruleName: "عمليات الرفع", ruleDesc: "خطط لعمليات الرفع والتحكم في المنطقة",
+funFact: "استخدام معدات رفع بدون تدريب يزيد احتمال الحوادث بنسبة <strong>٣٠٠٪</strong>!", funIcon: "🎓",
+question: "ما شرط استخدام معدات الرفع؟",
+options: ["أن تكون متوفرة في الموقع", "أن تكون قد تدربت على استخدامها", "أن يوافق الزملاء", "أن تكون جديدة فقط"],
+correct: 1,
+feedback_correct: "أحسنت! يجب استخدام فقط المعدات التي تدربت على استخدامها.",
+feedback_wrong: "يجب استخدام فقط المعدات التي تلقيت تدريبًا على استخدامها."
+},
+{
+rule: 10, ruleName: "قيادة المركبات أو المعدات", ruleDesc: "اتبع تعليمات القيادة الآمنة",
+funFact: "استخدام الهاتف أثناء القيادة يزيد خطر الحوادث بمقدار <strong>٤ أضعاف</strong>!", funIcon: "📵",
+question: "أي من التالي يُعد مخالفة لقواعد القيادة الآمنة؟",
+options: ["ربط حزام الأمان", "الحفاظ على مسافة آمنة", "استخدام الهاتف أثناء القيادة", "التخطيط للرحلة مسبقًا"],
+correct: 2,
+feedback_correct: "صحيح! استخدام الهاتف أو تشغيل الأجهزة أثناء القيادة ممنوع تمامًا.",
+feedback_wrong: "استخدام الهاتف أثناء القيادة مخالفة خطيرة لقواعد القيادة الآمنة."
+},
+{
+rule: 10, ruleName: "قيادة المركبات أو المعدات", ruleDesc: "اتبع تعليمات القيادة الآمنة",
+funFact: "حزام الأمان يقلل خطر الوفاة في الحوادث بنسبة <strong>٤٥٪</strong> ويقلل الإصابات الخطيرة بنسبة <strong>٥٠٪</strong>!", funIcon: "🔗",
+question: "ما الحالة الذهنية والبدنية المطلوبة أثناء القيادة؟",
+options: ["التركيز على المحادثة مع الركاب", "أن تكون لائقًا ومنتبهًا وفي حالة تأهب تام", "القيادة حتى مع الشعور بالإرهاق لإنجاز المهمة", "الاعتماد على خبرتك الطويلة"],
+correct: 1,
+feedback_correct: "ممتاز! يجب أن تكون لائقًا ومنتبهًا وفي حالة تأهب تام أثناء القيادة.",
+feedback_wrong: "يجب أن تكون لائقًا، منتبهًا، وفي حالة تأهب تام أثناء القيادة دائمًا."
+},
+{
+rule: "✋", ruleName: "أوقف العمل غير الآمن", ruleDesc: "صلاحيتك بإيقاف العمل غير الآمن",
+funFact: "كل موظف ومقاول لديه <strong>الصلاحية الكاملة</strong> لإيقاف أي عمل غير آمن!", funIcon: "✋",
+question: "من لديه صلاحية إيقاف العمل غير الآمن؟",
+options: ["المدير فقط", "مسؤول السلامة فقط", "جميع الموظفين والمقاولين", "الجهات الحكومية فقط"],
+correct: 2,
+feedback_correct: "بالضبط! جميع الموظفين والمقاولين لديهم صلاحية إيقاف العمل غير الآمن.",
+feedback_wrong: "جميع الموظفين والمقاولين لديهم الصلاحية الكاملة لإيقاف العمل غير الآمن."
+},
+{
+rule: "✋", ruleName: "أوقف العمل غير الآمن", ruleDesc: "صلاحيتك بإيقاف العمل غير الآمن",
+funFact: "إيقاف العمل غير الآمن يمكن أن <strong>ينقذ حياة</strong> زملائك!", funIcon: "🛑",
+question: "في أي من الحالات التالية يجب إيقاف العمل؟",
+options: ["عند عدم ارتداء معدات الوقاية المناسبة فقط", "عند عدم عزل الطاقة فقط", "جميع ما سبق: عدم عزل الطاقة، عدم ارتداء PPE، عدم اتباع إجراءات السلامة", "لا يجب إيقاف العمل أبدًا"],
+correct: 2,
+feedback_correct: "صحيح! يجب إيقاف العمل في جميع هذه الحالات.",
+feedback_wrong: "يجب إيقاف العمل في جميع الحالات: عدم عزل الطاقة، عدم ارتداء PPE، وعدم اتباع إجراءات السلامة."
+}
+];
+
+// ===== NAVIGATION =====
+function showScreen(id) {
+document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goHome() { stopTimer(); showScreen('homeScreen'); }
+function goToLearn() { currentRule = 0; loadRule(); showScreen('learnScreen'); }
+function goToStopRule() { const rules = getRulesData(); currentRule = rules.length - 1; loadRule(); showScreen('learnScreen'); }
+function goToQuiz() { currentQ = 0; quizScore = 0; quizAnswered = false; stopTimer(); prepareQuiz(); loadQuizQuestion(); showScreen('quizScreen'); document.getElementById('quizContent').style.display = 'block'; document.getElementById('scoreSection').classList.remove('show'); }
+
+// ===== LEARN SECTION =====
+let currentRule = 0;
+
+function loadRule(){
+const rules = getRulesData(); const r = rules[currentRule]; const total = rules.length; const u = UI[lang];
+document.getElementById('learnProgressText').textContent = u.ruleOf(currentRule+1, total);
+document.getElementById('learnProgressFill').style.width = `${((currentRule+1)/total)*100}%`;
+
+let dotsHTML = '';
+for (let i = 0; i < total; i++) {
+const cls = i === currentRule ? 'active' : (i < currentRule ? 'visited' : '');
+dotsHTML += `<div class="dot-item ${cls}" onclick="jumpToRule(${i})"></div>`;
+}
+document.getElementById('dotsNav').innerHTML = dotsHTML;
+
+const detailsHTML = r.details.map(d => `
+<div class="rule-detail-item">
+<div class="detail-icon">${d.icon}</div>
+<div class="detail-text">${d.text}</div>
+</div>
+`).join('');
+
+const isStop = r.isSpecial;
+const numDisplay = typeof r.number === 'number' ? fmtNum(r.number) : r.number;
+const headerCls = isStop ? 'rule-learn-header stop-header' : 'rule-learn-header';
+const numCls = isStop ? 'rule-learn-number stop-badge' : 'rule-learn-number';
+const titleCls = isStop ? 'rule-learn-title stop-title' : 'rule-learn-title';
+
+const bannerHTML = isStop ? `<div class="stop-banner"><div class="stop-banner-text">${r.subtitle}</div></div>` : '';
+
+document.getElementById('learnContent').innerHTML = `
+<div class="rule-learn-card">
+<div class="${headerCls}"><div class="rule-learn-header-bg">
+<div class="${numCls}">${numDisplay}</div>
+<div class="${titleCls}">${r.icon} ${r.name}</div>
+${isStop ? '' : `<div class="rule-learn-subtitle">${r.subtitle}</div>`}
+</div></div>
+${bannerHTML}
+<div class="learn-fun-fact"><div class="learn-fun-fact-icon">${r.funIcon}</div><p>${r.funFact}</p></div>
+<div class="rule-details-title">${u.whatToDo}</div>
+${detailsHTML}
+</div>`;
+
+let btnsHTML = '';
+if (currentRule > 0) btnsHTML += `<button class="learn-btn secondary" onclick="prevRule()">${u.prev}</button>`;
+if (currentRule < total - 1) btnsHTML += `<button class="learn-btn primary" onclick="nextRule()">${u.next}</button>`;
+else btnsHTML += `<button class="learn-btn primary" onclick="goToQuiz()">${u.startQuiz}</button>`;
+document.getElementById('learnNavButtons').innerHTML = btnsHTML;
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function nextRule(){if(currentRule<getRulesData().length-1){currentRule++;loadRule()}}
+function prevRule(){if(currentRule>0){currentRule--;loadRule()}}
+function jumpToRule(i){currentRule=i;loadRule()}
+
+// ===== QUIZ SECTION =====
+let currentQ = 0;
+let quizScore = 0;
+let quizAnswered = false;
+let timerInterval = null;
+let timeLeft = 30;
+const QUESTION_TIME = 30;
+let shuffledQuiz = [];
+
+function shuffleArray(arr) {
+const a = [...arr];
+for (let i = a.length - 1; i > 0; i--) {
+const j = Math.floor(Math.random() * (i + 1));
+[a[i], a[j]] = [a[j], a[i]];
+}
+return a;
+}
+
+function prepareQuiz() {
+shuffledQuiz = shuffleArray(getQuizData()).map(q => {
+const correctText = q.options[q.correct];
+const shuffledOptions = shuffleArray(q.options);
+const newCorrect = shuffledOptions.indexOf(correctText);
+return { ...q, options: shuffledOptions, correct: newCorrect };
+});
+}
+
+function startTimer() {
+clearInterval(timerInterval);
+timeLeft = QUESTION_TIME;
+updateTimerUI();
+
+timerInterval = setInterval(() => {
+timeLeft--;
+updateTimerUI();
+if (timeLeft <= 0) {
+clearInterval(timerInterval);
+timerExpired();
+}
+}, 1000);
+}
+
+function stopTimer() {
+clearInterval(timerInterval);
+}
+
+function updateTimerUI() {
+const pct = (timeLeft / QUESTION_TIME) * 100;
+const fill = document.getElementById('timerBarFill');
+const text = document.getElementById('timerText');
+
+fill.style.width = pct + '%';
+text.textContent = fmtNum(timeLeft);
+
+// Remove old classes
+fill.classList.remove('warning', 'danger');
+text.classList.remove('warning', 'danger');
+
+if (timeLeft <= 5) {
+fill.classList.add('danger');
+text.classList.add('danger');
+} else if (timeLeft <= 10) {
+fill.classList.add('warning');
+text.classList.add('warning');
+}
+}
+
+function timerExpired() {
+if (quizAnswered) return;
+quizAnswered = true;
+const q = shuffledQuiz[currentQ];
+const allBtns = document.querySelectorAll('.option-btn');
+const fb = document.getElementById('feedback');
+
+allBtns.forEach(btn => {
+const idx = parseInt(btn.dataset.index);
+if (idx === q.correct) btn.classList.add('correct');
+else btn.classList.add('disabled');
+});
+
+fb.className = 'feedback wrong-feedback timer-expired-feedback show';
+fb.innerHTML = `${UI[lang].timeUp} ${q.feedback_wrong}`;
+
+const nextBtn = document.getElementById('nextBtn');
+nextBtn.className = 'next-btn show';
+nextBtn.textContent = currentQ < shuffledQuiz.length - 1 ? UI[lang].nextQ : UI[lang].showResult;
+}
+
+function loadQuizQuestion() {
+quizAnswered = false;
+const q = shuffledQuiz[currentQ];
+const total = shuffledQuiz.length;
+
+document.getElementById('progressCount').textContent = `${fmtNum(currentQ + 1)} / ${fmtNum(total)}`;
+document.getElementById('progressFill').style.width = `${((currentQ + 1) / total) * 100}%`;
+
+document.getElementById('ruleBadge').innerHTML = `
+<div class="rule-number">${fmtNum(q.rule)}</div>
+<div class="rule-info"><h3>${q.ruleName}</h3><p>${q.ruleDesc}</p></div>
+`;
+
+document.getElementById('funFact').innerHTML = `
+<div class="fun-fact-icon">${q.funIcon}</div>
+<p>${q.funFact}</p>
+`;
+
+document.getElementById('questionText').innerHTML = `
+<span class="question-number-inline">${fmtNum(currentQ + 1)}</span> ${q.question}
+`;
+
+const ltrs = L();
+document.getElementById('optionsList').innerHTML = q.options.map((opt, i) => `
+<button class="option-btn" onclick="selectOption(${i}, this)" data-index="${i}">
+<span class="option-letter">${ltrs[i]}</span>
+<span class="option-text">${opt}</span>
+</button>
+`).join('');
+
+document.getElementById('feedback').className = 'feedback';
+document.getElementById('nextBtn').className = 'next-btn';
+window.scrollTo({ top: 0, behavior: 'smooth' });
+
+startTimer();
+}
+
+function selectOption(index) {
+if (quizAnswered) return;
+quizAnswered = true;
+stopTimer();
+const q = shuffledQuiz[currentQ];
+const allBtns = document.querySelectorAll('.option-btn');
+const fb = document.getElementById('feedback');
+
+allBtns.forEach(btn => {
+const idx = parseInt(btn.dataset.index);
+if (idx === q.correct) btn.classList.add('correct');
+else if (idx === index) btn.classList.add('wrong');
+if (idx !== q.correct && idx !== index) btn.classList.add('disabled');
+});
+
+if (index === q.correct) {
+quizScore++;
+fb.className = 'feedback correct-feedback show';
+fb.innerHTML = `✅ ${q.feedback_correct}`;
+} else {
+fb.className = 'feedback wrong-feedback show';
+fb.innerHTML = `❌ ${q.feedback_wrong}`;
+}
+
+const nextBtn = document.getElementById('nextBtn');
+nextBtn.className = 'next-btn show';
+nextBtn.textContent = currentQ < shuffledQuiz.length - 1 ? UI[lang].nextQ : UI[lang].showResult;
+}
+
+function nextQuestion() {
+currentQ++;
+if (currentQ < shuffledQuiz.length) loadQuizQuestion();
+else showScore();
+}
+
+function showScore() {
+stopTimer();
+document.getElementById('quizContent').style.display = 'none';
+document.getElementById('scoreSection').classList.add('show');
+
+// Display user info
+document.getElementById('scoreUserName').textContent = userName;
+document.getElementById('scoreUserId').textContent = userId;
+
+const total = shuffledQuiz.length;
+const pct = quizScore / total;
+
+document.getElementById('scoreValue').textContent = fmtNum(quizScore);
+document.getElementById('scoreTotalLabel').textContent = `${UI[lang].of} ${fmtNum(total)}`;
+document.getElementById('correctCount').textContent = fmtNum(quizScore);
+document.getElementById('wrongCount').textContent = fmtNum(total - quizScore);
+
+setTimeout(() => {
+document.getElementById('scoreFillCircle').style.strokeDashoffset = 452.4 - (pct * 452.4);
+}, 300);
+
+const t = document.getElementById('scoreTitle');
+const m = document.getElementById('scoreMessage');
+const u = UI[lang];
+
+if (pct === 1) { t.textContent = u.perfect.t; m.textContent = u.perfect.m; launchConfetti(); }
+else if (pct >= 0.7) { t.textContent = u.great.t; m.textContent = u.great.m; launchConfetti(); }
+else if (pct >= 0.5) { t.textContent = u.good.t; m.textContent = u.good.m; }
+else { t.textContent = u.needReview.t; m.textContent = u.needReview.m; }
+}
+
+function restartQuiz() { goToQuiz(); }
+
+function launchConfetti() {
+const c = document.getElementById('confettiContainer');
+const colors = ['#2ecc71','#d4a03c','#e67e22','#3498db','#f39c12','#e74c3c'];
+for (let i = 0; i < 60; i++) {
+const el = document.createElement('div');
+el.className = 'confetti';
+el.style.left = Math.random()*100+'%';
+el.style.background = colors[Math.floor(Math.random()*colors.length)];
+el.style.width = (Math.random()*8+5)+'px';
+el.style.height = (Math.random()*8+5)+'px';
+el.style.borderRadius = Math.random()>0.5?'50%':'2px';
+el.style.animationDuration = (Math.random()*2+2)+'s';
+el.style.animationDelay = (Math.random()*1.5)+'s';
+c.appendChild(el);
+}
+setTimeout(() => c.innerHTML = '', 5000);
+}
+</script>
+
+</body>
+</html>
