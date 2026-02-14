@@ -8,49 +8,58 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
---bg-primary: #0a1f1a;
---bg-secondary: #0f2e25;
---bg-card: #132f27;
---bg-card-hover: #1a3d33;
---accent-green: #2ecc71;
---accent-green-dim: rgba(46,204,113,0.15);
---accent-gold: #d4a03c;
---accent-orange: #e67e22;
---text-primary: #f0f5f3;
---text-secondary: #8faa9e;
---text-muted: #5a7a6e;
---correct: #27ae60;
---correct-bg: rgba(39,174,96,0.15);
---wrong: #e74c3c;
---wrong-bg: rgba(231,76,60,0.15);
+  --bg-primary: #0a1f1a;
+  --bg-secondary: #0f2e25;
+  --bg-card: #132f27;
+  --bg-card-hover: #1a3d33;
+  --accent-green: #2ecc71;
+  --accent-green-dim: rgba(46,204,113,0.15);
+  --accent-gold: #d4a03c;
+  --accent-orange: #e67e22;
+  --text-primary: #f0f5f3;
+  --text-secondary: #8faa9e;
+  --text-muted: #5a7a6e;
+  --correct: #27ae60;
+  --correct-bg: rgba(39,174,96,0.15);
+  --wrong: #e74c3c;
+  --wrong-bg: rgba(231,76,60,0.15);
 }
 
-- { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
 
 body {
-font-family: 'Tajawal', sans-serif;
-background: var(-bg-primary);
-color: var(-text-primary);
-min-height: 100vh;
-overflow-x: hidden;
+  font-family: 'Tajawal', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 body::before {
-content: '';
-position: fixed;
-top: -50%; right: -30%;
-width: 80vw; height: 80vw;
-background: radial-gradient(circle, rgba(46,204,113,0.06) 0%, transparent 70%);
-pointer-events: none; z-index: 0;
+  content: '';
+  position: fixed;
+  top: -50%;
+  right: -30%;
+  width: 80vw;
+  height: 80vw;
+  background: radial-gradient(circle, rgba(46,204,113,0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .container {
-max-width: 480px;
-margin: 0 auto;
-padding: 20px 16px 40px;
-position: relative;
-z-index: 1;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+  position: relative;
+  z-index: 1;
 }
+</style>
 
 /* ===== SHARED HEADER ===== */
 .header {
@@ -2050,4 +2059,5 @@ setTimeout(() => c.innerHTML = '', 5000);
 
 </body>
 </html>
+
 
